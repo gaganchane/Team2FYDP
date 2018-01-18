@@ -2,7 +2,7 @@ setwd("/Users/mbr/Desktop/FYDP4B")
 getwd()
 
 # read almabase output
-alma_data <- read.csv("data-buddy-7.csv", header=T, na.strings=c("", " ", "NA"), stringsAsFactors=FALSE)
+alma_data <- read.csv("data-buddy-5.csv", header=T, na.strings=c("", " ", "NA"), stringsAsFactors=FALSE)
 View(alma_data)
 
 # create vector of relevant columns
@@ -160,3 +160,6 @@ View(init_df)
 
 # write init_df to csv
 write.csv(init_df, file = "output.csv", row.names = FALSE)
+
+df <- read.csv("mgmt_data_clean.csv")
+View(df)
