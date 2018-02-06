@@ -7,7 +7,7 @@ clean <- read.csv("mgmt_data_clean.csv")
 View(clean)
 
 # read almabase output
-alma_data <- read.csv("data-buddy-6.csv", header=T, na.strings=c("", " ", "NA"), stringsAsFactors=FALSE)
+alma_data <- read.csv("data-buddy-8.csv", header=T, na.strings=c("", " ", "NA"), stringsAsFactors=FALSE)
 View(alma_data)
 
 # create vector of relevant columns
@@ -474,28 +474,48 @@ for(i in 1:nrow(relevant_data)){
 # replace "&amp;" with "&"
 init_df$Company <- gsub('&amp;', '&', init_df$Company)
 init_df$Position <- gsub('&amp;', '&', init_df$Position)
-View(init_df)
 
 # Sort dataframe by ID, Start.Year, Start.Month
 #init_df$Start.Month <- as.numeric(as.character(init_df$Start.Month))
 #init_df$Start.Year <- as.numeric(as.character(init_df$Start.Year))
 init_df <- arrange(init_df, ID, Start.Year, Start.Month)
-View(init_df)
 
 # Number of unique ids 
 uniq.ids <- init_df[nrow(init_df), 'ID']
 
 # Add COOP.ID and WORK.ID
-count = 1
-for (i in 1:nrow(init_df)){
+coopcount = 1
+workcount = 1
+
+if(init_df[1, 'Start.Year'] < init_df[1, 'Year']){
+  init_df[1, 'COOP_ID'] <- coopcount
+  init_df[1, 'WORK_ID'] <- NA
+  coopcount = coopcount + 1
+} else {
+  init_df[1, 'WORK_ID'] <- workcount
+  init_df[1, 'COOP_ID'] <- NA
+  workcount = workcount + 1
+}
+  
+for (i in 2:nrow(init_df)){
+  
+  if(init_df[i, 'ID'] != init_df[i-1, 'ID']){
+    coopcount = 1
+    workcount = 1
+  }
+  
   if(init_df[i, 'Start.Year'] < init_df[i, 'Year']){
-    init_df[i, 'COOP.ID'] <- 1
-    init_df[i, 'WORK.ID'] <- NA
+    init_df[i, 'COOP_ID'] <- coopcount
+    init_df[i, 'WORK_ID'] <- NA
+    coopcount = coopcount + 1
   } else {
-    init_df[i, 'WORK.ID'] <- 1
-    init_df[i, 'COOP.ID'] <- NA
+    init_df[i, 'WORK_ID'] <- workcount
+    init_df[i, 'COOP_ID'] <- NA
+    workcount = workcount + 1
   }
 }
+
+View(init_df)
 
 # write init_df to csv
 write.csv(init_df, file = "output.csv", row.names = FALSE)
