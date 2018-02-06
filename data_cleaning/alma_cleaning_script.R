@@ -1,8 +1,10 @@
+# Install.packages("dplyr")
+library(dplyr)
 setwd("/Users/mbr/Desktop/FYDP4B")
 getwd()
 
-df <- read.csv("mgmt_clean_data.csv")
-View(df)
+clean <- read.csv("mgmt_data_clean.csv")
+View(clean)
 
 # read almabase output
 alma_data <- read.csv("data-buddy-6.csv", header=T, na.strings=c("", " ", "NA"), stringsAsFactors=FALSE)
@@ -473,6 +475,27 @@ for(i in 1:nrow(relevant_data)){
 init_df$Company <- gsub('&amp;', '&', init_df$Company)
 init_df$Position <- gsub('&amp;', '&', init_df$Position)
 View(init_df)
+
+# Sort dataframe by ID, Start.Year, Start.Month
+#init_df$Start.Month <- as.numeric(as.character(init_df$Start.Month))
+#init_df$Start.Year <- as.numeric(as.character(init_df$Start.Year))
+init_df <- arrange(init_df, ID, Start.Year, Start.Month)
+View(init_df)
+
+# Number of unique ids 
+uniq.ids <- init_df[nrow(init_df), 'ID']
+
+# Add COOP.ID and WORK.ID
+count = 1
+for (i in 1:nrow(init_df)){
+  if(init_df[i, 'Start.Year'] < init_df[i, 'Year']){
+    init_df[i, 'COOP.ID'] <- 1
+    init_df[i, 'WORK.ID'] <- NA
+  } else {
+    init_df[i, 'WORK.ID'] <- 1
+    init_df[i, 'COOP.ID'] <- NA
+  }
+}
 
 # write init_df to csv
 write.csv(init_df, file = "output.csv", row.names = FALSE)
