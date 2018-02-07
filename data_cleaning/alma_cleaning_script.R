@@ -484,10 +484,11 @@ init_df <- arrange(init_df, ID, Start.Year, Start.Month)
 uniq.ids <- init_df[nrow(init_df), 'ID']
 
 # Add COOP.ID and WORK.ID
+# Alumni that have ongoing "second job" from prior to graduation will count as WORD_ID/full time job
 coopcount = 1
 workcount = 1
 
-if(init_df[1, 'Start.Year'] < init_df[1, 'Year']){
+if(init_df[1, 'Start.Year'] < init_df[1, 'Year'] & (init_df[i, 'End.Date.pres'] != "pres")){
   init_df[1, 'COOP_ID'] <- coopcount
   init_df[1, 'WORK_ID'] <- NA
   coopcount = coopcount + 1
@@ -504,7 +505,7 @@ for (i in 2:nrow(init_df)){
     workcount = 1
   }
   
-  if(init_df[i, 'Start.Year'] < init_df[i, 'Year']){
+  if((init_df[i, 'Start.Year'] < init_df[i, 'Year']) & (init_df[i, 'End.Date.pres'] != "pres")){
     init_df[i, 'COOP_ID'] <- coopcount
     init_df[i, 'WORK_ID'] <- NA
     coopcount = coopcount + 1
