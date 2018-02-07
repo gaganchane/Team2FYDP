@@ -515,7 +515,6 @@ for (i in 2:nrow(init_df)){
     workcount = workcount + 1
   }
 }
-
 View(init_df)
 
 # write init_df to csv
