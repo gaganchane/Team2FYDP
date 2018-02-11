@@ -1,5 +1,13 @@
-# Install.packages("dplyr")
+# install.packages("dplyr")
+# install.packages("maps")
+# install.packages("tm")
+# http://www.geodatasource.com/world-cities-database/free
+# http://www.downloadexcelfiles.com/wo_en/download-list-cities-canada#.Wn_HyJM-eYU
+
 library(dplyr)
+library(maps)
+library(tm)
+
 setwd("/Users/mbr/Desktop/FYDP4B")
 getwd()
 
@@ -7,7 +15,7 @@ clean <- read.csv("mgmt_data_clean.csv")
 View(clean)
 
 # read almabase output
-alma_data <- read.csv("data-buddy-8.csv", header=T, na.strings=c("", " ", "NA"), stringsAsFactors=FALSE)
+alma_data <- read.csv("data-buddy-4.csv", header=T, na.strings=c("", " ", "NA"), stringsAsFactors=FALSE)
 View(alma_data)
 
 # create vector of relevant columns
@@ -27,8 +35,8 @@ View(relevant_data)
 
 # initialize data frame to which final output will be added
 names <- c("ID", "WORK_ID", "COOP_ID", "Name", "URL", "Year", "Company", "Position", "Duration", "Start.Date", 
-           "Start.Month", "Start.Year", "End.Date.pres", "End.Year", "End.Month", "Full.Location", "City", "Province", "Country")
-init_df <- data.frame(matrix(ncol = 19, nrow = 0), stringsAsFactors=FALSE)
+           "Start.Month", "Start.Year", "End.Date.pres", "End.Year", "End.Month", "Full.Location", "City", "Country")
+init_df <- data.frame(matrix(ncol = 18, nrow = 0), stringsAsFactors=FALSE)
 colnames(init_df) <- names
 count <- 1
 
@@ -114,9 +122,8 @@ for(i in 1:nrow(relevant_data)){
     init_df[count, 14] <- end_month_num
     init_df[count, 15] <- end_year
     init_df[count, 16] <- relevant_data[i,10]
-    init_df[count, 17] <- i
-    init_df[count, 18] <- i
-    init_df[count, 19] <- i
+    init_df[count, 17] <- NA
+    init_df[count, 18] <- NA
     
     count = count + 1
     print(count)
@@ -201,9 +208,8 @@ for(i in 1:nrow(relevant_data)){
     init_df[count, 14] <- end_month_num
     init_df[count, 15] <- end_year
     init_df[count, 16] <- relevant_data[i,14]
-    init_df[count, 17] <- i
-    init_df[count, 18] <- i
-    init_df[count, 19] <- i
+    init_df[count, 17] <- NA
+    init_df[count, 18] <- NA
     
     count = count + 1
     print(count)
@@ -288,9 +294,8 @@ for(i in 1:nrow(relevant_data)){
     init_df[count, 14] <- end_month_num
     init_df[count, 15] <- end_year
     init_df[count, 16] <- relevant_data[i,18]
-    init_df[count, 17] <- i
-    init_df[count, 18] <- i
-    init_df[count, 19] <- i
+    init_df[count, 17] <- NA
+    init_df[count, 18] <- NA
     
     count = count + 1
     print(count)
@@ -375,9 +380,8 @@ for(i in 1:nrow(relevant_data)){
     init_df[count, 14] <- end_month_num
     init_df[count, 15] <- end_year
     init_df[count, 16] <- relevant_data[i,22]
-    init_df[count, 17] <- i
-    init_df[count, 18] <- i
-    init_df[count, 19] <- i
+    init_df[count, 17] <- NA
+    init_df[count, 18] <- NA
     
     count = count + 1
     print(count)
@@ -462,9 +466,8 @@ for(i in 1:nrow(relevant_data)){
     init_df[count, 14] <- end_month_num
     init_df[count, 15] <- end_year
     init_df[count, 16] <- relevant_data[i,26]
-    init_df[count, 17] <- i
-    init_df[count, 18] <- i
-    init_df[count, 19] <- i
+    init_df[count, 17] <- NA
+    init_df[count, 18] <- NA
     
     count = count + 1
     print(count)
@@ -479,9 +482,6 @@ init_df$Position <- gsub('&amp;', '&', init_df$Position)
 #init_df$Start.Month <- as.numeric(as.character(init_df$Start.Month))
 #init_df$Start.Year <- as.numeric(as.character(init_df$Start.Year))
 init_df <- arrange(init_df, ID, Start.Year, Start.Month)
-
-# Number of unique ids 
-uniq.ids <- init_df[nrow(init_df), 'ID']
 
 # Add COOP.ID and WORK.ID
 # Alumni that have ongoing "second job" from prior to graduation will count as WORD_ID/full time job
@@ -515,7 +515,98 @@ for (i in 2:nrow(init_df)){
     workcount = workcount + 1
   }
 }
-View(init_df)
 
 # write init_df to csv
 write.csv(init_df, file = "output.csv", row.names = FALSE)
+
+# determine location (city and country) and add to init_df
+
+# obtain database for all cities and countries
+cities <- data.frame(world.cities, stringsAsFactors = FALSE)
+canada.cities.data <- read.csv("canadacities.csv", header = TRUE, stringsAsFactors = FALSE)
+usa.cities <- subset(cities[,1:2], country.etc == "USA")
+canada.cities <- canada.cities.data
+#canada.cities$Name <- gsub("[^A-Za-z0-9 ]", "", canada.cities$Name)
+other.cities <- subset(cities[,1:2], country.etc != "USA" & country.etc != "Canada")
+
+# remove words like "Area", "Greater" from cities and countries 
+stopwords <- c("Area", "Greater")
+init_df$Full.Location <- removeWords(init_df$Full.Location, stopwords)
+init_df$City <- as.numeric(init_df$City)
+init_df$Country <- as.numeric(init_df$Country)
+
+for (i in 1:nrow(init_df)){
+  
+  if(is.na(init_df[i, "Full.Location"])){
+    init_df[i, "City"] <- NA
+    init_df[i, "Country"] <- NA
+    next
+  }
+  
+  location.split <- unlist(strsplit(init_df[i, "Full.Location"], split=" "))
+
+  if(tail(location.split, n=1) == "Canada"){
+    init_df[i,"Country"] <- "Canada"
+    location.split <- head(location.split, -1)
+    location.split.concat <- do.call(c, lapply(seq_along(location.split), function(i) combn(location.split, i, FUN = list)))
+
+    for(j in 1:length(location.split.concat)){
+      location.split.concat[[j]] <- paste(location.split.concat[[j]], collapse = ' ')
+    }
+    unlist(location.split.concat)
+
+    for(k in 1:length(location.split.concat)){
+     # if(k == 1){
+        for(l in 1:nrow(canada.cities)){
+          if(tolower(location.split.concat[k]) == tolower(canada.cities[l,1])){
+            init_df[i, "City"] <- location.split.concat[k]
+          }
+        }
+      #}
+    }
+    next
+  }
+  
+  location.split.concat <- do.call(c, lapply(seq_along(location.split), function(i) combn(location.split, i, FUN = list)))
+  
+  for(j in 1:length(location.split.concat)){
+    location.split.concat[[j]] <- paste(location.split.concat[[j]], collapse = ' ')
+  }
+  
+  for(m in 1:length(location.split.concat)){
+    for(l in 1:nrow(canada.cities)){
+      if(tolower(location.split.concat[m]) == tolower(canada.cities[l,1])){
+        init_df[i, "City"] <- location.split.concat[m]
+        init_df[i, "Country"] <- "Canada"
+        break
+      } 
+    }
+  }
+  if((!(is.na(init_df[i, "City"]))) | (!(is.na(init_df[i, "Country"])))){
+    next
+  }
+  
+  for(m in 1:length(location.split.concat)){
+    for(l in 1:nrow(usa.cities)){
+      if(tolower(location.split.concat[m]) == tolower(usa.cities[l,1])){
+        init_df[i, "City"] <- location.split.concat[m]
+        init_df[i, "Country"] <- "United States"
+        break
+      }
+    }
+  }
+  if((!(is.na(init_df[i, "City"]))) | (!(is.na(init_df[i, "Country"])))){
+    next
+  }
+  
+  for(m in 1:length(location.split.concat)){
+    for(l in 1:nrow(other.cities)){
+      if(tolower(location.split.concat[m]) == tolower(other.cities[l,1])){
+        init_df[i, "City"] <- location.split.concat[m]
+        init_df[i, "Country"] <- other.cities[l,2]
+        break
+      }
+    }
+  }
+}
+View(init_df)
