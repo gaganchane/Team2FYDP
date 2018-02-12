@@ -23,7 +23,7 @@ def readCSVFile(directory):
 def loadProfile(driver, URL, cssSelector):
   print(URL)
   driver.get(URL)
-  time.sleep(10)
+  time.sleep(5)
   element = driver.find_element_by_css_selector(cssSelector)
   if element.is_displayed():
     print ("Download button found")
@@ -35,14 +35,16 @@ def loadProfile(driver, URL, cssSelector):
   except WebDriverException:
     print ("Button is not clickable")
   element.send_keys(Keys.RETURN)
-  time.sleep(17)
+  time.sleep(15)
 
-graduates = readCSVFile('testFile.csv')
+graduates = readCSVFile('input.csv')
 driver = startChrome()
 downloadButton = "#ab-indeed-capture a"
 
 for row in graduates['URL']:
   loadProfile(driver, row, downloadButton)
+
+driver.quit()
 
 
 # typeEmail = driver.find_element_by_css_selector(".login-email")
