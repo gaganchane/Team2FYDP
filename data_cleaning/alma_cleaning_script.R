@@ -15,7 +15,7 @@ clean <- read.csv("mgmt_data_clean.csv")
 View(clean)
 
 # read almabase output
-alma_data <- read.csv("data-buddy-5.csv", header=T, na.strings=c("", " ", "NA"), stringsAsFactors=FALSE)
+alma_data <- read.csv("data-buddy-16.csv", header=T, na.strings=c("", " ", "NA"), stringsAsFactors=FALSE)
 View(alma_data)
 
 # create vector of relevant columns
@@ -37,7 +37,7 @@ names <- c("ID", "WORK_ID", "COOP_ID", "Name", "URL", "Year", "Company", "Positi
 init_df <- data.frame(matrix(ncol = 18, nrow = 0), stringsAsFactors=FALSE)
 colnames(init_df) <- names
 count <- 1
-
+View(alma_data)
 date.format <- function(duration){
   emp_duration_split <- strsplit(duration, " - ")
   start_duration_split <- strsplit(emp_duration_split[[1]][1], " ")
@@ -53,8 +53,13 @@ date.format <- function(duration){
       end_year <- "pres"
     } else {
       end_duration_split <- strsplit(emp_duration_split[[1]][2], " ")
-      end_month <- end_duration_split[[1]][1]
-      end_year <- end_duration_split[[1]][2]
+      if(!is.na(end_duration_split[[1]][2])){
+        end_month <- end_duration_split[[1]][1]
+        end_year <- end_duration_split[[1]][2]
+      } else {
+        end_month <- NA
+        end_year <- end_duration_split[[1]][1]
+      }
     }
     
     if(match(start_month, month.abb) < 10){
@@ -65,18 +70,24 @@ date.format <- function(duration){
     
     start_date <- paste(c(start_month_num, start_year), collapse="/") 
     
-    if(end_month == "pres"){
-      end_month_num <- "pres"
-    } else if (match(end_month, month.abb) < 10){
-      end_month_num <- paste(c("0", match(end_month, month.abb)), collapse="")
+    if(!is.na(end_month)){
+      if(end_month == "pres"){
+        end_month_num <- "pres"
+      } else if (match(end_month, month.abb) < 10){
+        end_month_num <- paste(c("0", match(end_month, month.abb)), collapse="")
+      } else {
+        end_month_num <- match(end_month, month.abb)
+      } 
     } else {
-      end_month_num <- match(end_month, month.abb)
+      end_month_num <- "Unavailable"
     }
-    
+
     if(end_month_num == "pres"){
       end_date <- end_month_num
-    } else {
+    } else if (end_month_num != "Unavailable"){
       end_date <- paste(c(end_month_num, end_year), collapse="/") 
+    } else {
+      end_date <- end_year
     }
     
     final_duration <- paste(c(start_date, end_date), collapse="-")
@@ -84,10 +95,10 @@ date.format <- function(duration){
   } else {
     
     start_date <- emp_duration_split[[1]][1]
-    start_month_num <- "NA"
+    start_month_num <- "Unavailable"
     start_year <- emp_duration_split[[1]][1]
     end_date <- emp_duration_split[[1]][2]
-    end_month_num <- "NA"
+    end_month_num <- "Unavailable"
     end_year <- emp_duration_split[[1]][2]
     final_duration <- paste(c(start_date, end_date), collapse="-")
   }
@@ -284,10 +295,16 @@ init_df <- arrange(init_df, ID, Start.Year, Start.Month)
 coopcount = 1
 workcount = 1
 
-if(init_df[1, 'Start.Year'] < init_df[1, 'Year'] & (init_df[1, 'End.Date.pres'] != "pres")){
-  init_df[1, 'COOP_ID'] <- coopcount
-  init_df[1, 'WORK_ID'] <- NA
-  coopcount = coopcount + 1
+if(!is.na(init_df[i, 'Year'])){
+  if(init_df[1, 'Start.Year'] < init_df[1, 'Year'] & (init_df[1, 'End.Date.pres'] != "pres")){
+    init_df[1, 'COOP_ID'] <- coopcount
+    init_df[1, 'WORK_ID'] <- NA
+    coopcount = coopcount + 1
+  } else {
+    init_df[1, 'WORK_ID'] <- workcount
+    init_df[1, 'COOP_ID'] <- NA
+    workcount = workcount + 1
+  }
 } else {
   init_df[1, 'WORK_ID'] <- workcount
   init_df[1, 'COOP_ID'] <- NA
@@ -301,10 +318,16 @@ for (i in 2:nrow(init_df)){
     workcount = 1
   }
   
-  if((init_df[i, 'Start.Year'] < init_df[i, 'Year']) & (init_df[i, 'End.Date.pres'] != "pres")){
-    init_df[i, 'COOP_ID'] <- coopcount
-    init_df[i, 'WORK_ID'] <- NA
-    coopcount = coopcount + 1
+  if(!is.na(init_df[i, 'Year'])){
+    if((init_df[i, 'Start.Year'] < init_df[i, 'Year']) & (init_df[i, 'End.Date.pres'] != "pres")){
+      init_df[i, 'COOP_ID'] <- coopcount
+      init_df[i, 'WORK_ID'] <- NA
+      coopcount = coopcount + 1
+    } else {
+      init_df[i, 'WORK_ID'] <- workcount
+      init_df[i, 'COOP_ID'] <- NA
+      workcount = workcount + 1
+    }
   } else {
     init_df[i, 'WORK_ID'] <- workcount
     init_df[i, 'COOP_ID'] <- NA
