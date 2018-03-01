@@ -8,14 +8,13 @@ library(dplyr)
 library(maps)
 library(tm)
 
-setwd("/Users/mbr/Desktop/FYDP4B")
-getwd()
+setwd("/Users/mbr/Desktop/Team2FYDP/selenium/output")
 
-clean <- read.csv("mgmt_data_clean.csv")
-View(clean)
+#clean <- read.csv("chem-2012-1.csv")
+#View(clean)
 
 # read almabase output
-alma_data <- read.csv("data-buddy-16.csv", header=T, na.strings=c("", " ", "NA"), stringsAsFactors=FALSE)
+alma_data <- read.csv("mech-2012-2.csv", header=T, na.strings=c("", " ", "NA"), stringsAsFactors=FALSE)
 View(alma_data)
 
 # create vector of relevant columns
@@ -37,7 +36,7 @@ names <- c("ID", "WORK_ID", "COOP_ID", "Name", "URL", "Year", "Company", "Positi
 init_df <- data.frame(matrix(ncol = 18, nrow = 0), stringsAsFactors=FALSE)
 colnames(init_df) <- names
 count <- 1
-View(alma_data)
+
 date.format <- function(duration){
   emp_duration_split <- strsplit(duration, " - ")
   start_duration_split <- strsplit(emp_duration_split[[1]][1], " ")
@@ -339,6 +338,7 @@ for (i in 2:nrow(init_df)){
 
 # obtain database for all cities and countries
 cities <- data.frame(world.cities, stringsAsFactors = FALSE)
+setwd("/Users/mbr/Desktop/Team2FYDP/data_cleaning")
 canada.cities.data <- read.csv("canadacities.csv", header = TRUE, stringsAsFactors = FALSE)
 usa.cities <- subset(cities[,1:2], country.etc == "USA")
 canada.cities <- canada.cities.data
@@ -352,7 +352,6 @@ init_df$City <- as.numeric(init_df$City)
 init_df$Country <- as.numeric(init_df$Country)
 
 for (i in 1:nrow(init_df)){
-  
   if(is.na(init_df[i, "Full.Location"])){
     init_df[i, "City"] <- NA
     init_df[i, "Country"] <- NA
@@ -360,9 +359,14 @@ for (i in 1:nrow(init_df)){
   }
   
   location.split <- unlist(strsplit(init_df[i, "Full.Location"], split=" "))
-  
+
   if(tail(location.split, n=1) == "Canada"){
     init_df[i,"Country"] <- "Canada"
+    
+    if(length(location.split) == 1){
+      next
+    }
+    
     location.split <- head(location.split, -1)
     location.split.concat <- do.call(c, lapply(seq_along(location.split), function(i) combn(location.split, i, FUN = list)))
     
@@ -380,7 +384,7 @@ for (i in 1:nrow(init_df)){
     }
     next
   }
-  
+
   location.split.concat <- do.call(c, lapply(seq_along(location.split), function(i) combn(location.split, i, FUN = list)))
   
   for(j in 1:length(location.split.concat)){
@@ -413,6 +417,11 @@ for (i in 1:nrow(init_df)){
     next
   }
   
+  if(length(location.split) > 5){
+    location.split <- location.split[1:5]
+    location.split.concat <- do.call(c, lapply(seq_along(location.split), function(i) combn(location.split, i, FUN = list)))
+  }
+    
   for(m in 1:length(location.split.concat)){
     for(l in 1:nrow(other.cities)){
       if(tolower(location.split.concat[m]) == tolower(other.cities[l,1])){
@@ -426,4 +435,5 @@ for (i in 1:nrow(init_df)){
 View(init_df)
 
 # write init_df to csv
-write.csv(init_df, file = "output.csv", row.names = FALSE)
+setwd("/Users/mbr/Desktop/Team2FYDP/data_cleaning/outputs")
+write.csv(init_df, file = "mech-2012-2-output.csv", row.names = FALSE)
