@@ -8,14 +8,14 @@ library(dplyr)
 library(maps)
 library(tm)
 
-setwd("/Users/mbr/Desktop/Team2FYDP/selenium/output")
+setwd("C://Users//Joash//Desktop//University Stuff//4B uni stuff//Team2FYDP//data_cleaning")
 
 #clean <- read.csv("chem-2012-1.csv")
 #View(clean)
 
 # read almabase output
-alma_data <- read.csv("mech-2012-2.csv", header=T, na.strings=c("", " ", "NA"), stringsAsFactors=FALSE)
-View(alma_data)
+alma_data <- read.csv("update_mgmt_7.csv", header=T, na.strings=c("", " ", "NA"), stringsAsFactors=FALSE)
+#View(alma_data)
 
 # create vector of relevant columns
 relevant_cols <- c("Name", "Linkedin.URL", "Education..School.1", "Education..Duration.1", "Education..School.2", 
@@ -338,7 +338,7 @@ for (i in 2:nrow(init_df)){
 
 # obtain database for all cities and countries
 cities <- data.frame(world.cities, stringsAsFactors = FALSE)
-setwd("/Users/mbr/Desktop/Team2FYDP/data_cleaning")
+setwd("C://Users//Joash//Desktop//University Stuff//4B uni stuff//Team2FYDP//data_cleaning")
 canada.cities.data <- read.csv("canadacities.csv", header = TRUE, stringsAsFactors = FALSE)
 usa.cities <- subset(cities[,1:2], country.etc == "USA")
 canada.cities <- canada.cities.data
@@ -435,5 +435,5 @@ for (i in 1:nrow(init_df)){
 View(init_df)
 
 # write init_df to csv
-setwd("/Users/mbr/Desktop/Team2FYDP/data_cleaning/outputs")
-write.csv(init_df, file = "mech-2012-2-output.csv", row.names = FALSE)
+setwd("C://Users//Joash//Desktop//University Stuff//4B uni stuff//Team2FYDP//data_Cleaning//outputs")
+write.csv(init_df, file = "update_mgmt_7_output.csv", row.names = FALSE)
