@@ -46,7 +46,6 @@ date.format <- function(duration){
     start_year <- start_duration_split[[1]][2]
     
     if(emp_duration_split[[1]][2] == "Present"){
-      
       end_duration_split <- "pres"
       end_month <- "pres"
       end_year <- "pres"
@@ -60,7 +59,7 @@ date.format <- function(duration){
         end_year <- end_duration_split[[1]][1]
       }
     }
-    
+
     if(match(start_month, month.abb) < 10){
       start_month_num <- paste(c("0", match(start_month, month.abb)), collapse="") 
     } else {
