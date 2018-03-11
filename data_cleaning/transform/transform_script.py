@@ -218,249 +218,208 @@ def append_replace(newFile, masterFile):
 
 if __name__ == '__main__':
 
-    # masterFile = pd.read_csv("ece.csv")
-    masterFile = pd.read_csv("masterfile_replace_append.csv")
+    masterFile = pd.read_csv("ece.csv")
+    # masterFile = pd.read_csv("masterfile_replace_append.csv")
 
     alma_data = pd.read_csv("quickquicktest.csv")
+
+    if not alma_data.empty:
     # alma_data = pd.read_csv("update_mgmt_1.csv")
     # alma_data = pd.read_csv("C:\\Users\\Joash\\Desktop\\University Stuff\\4B uni stuff\\Team2FYDP\\data_cleaning\\"
     #                         "transform\\update_mgmt_1.csv")
 
 
-    alma_data = alma_data.rename(columns={"Name":"Name",
-                               "Linkedin URL":"Linkedin.URL",
-                               " Education: School 1":"Education..School.1",
-                               "Education: Duration 1":"Education..Duration.1",
-                               " Education: School 2":"Education..School.2",
-                               "Education: Duration 2":"Education..Duration.2",
-                               " Employment: Employer 1":"Employment..Employer.1",
-                               "Employment: Title 1":"Employment..Title.1",
-                               "Employment: Duration 1":"Employment..Duration.1",
-                               "Employment: Location 1":"Employment..Location.1",
-                               " Employment: Employer 2":"Employment..Employer.2",
-                               "Employment: Title 2":"Employment..Title.2",
-                               "Employment: Duration 2":"Employment..Duration.2",
-                               "Employment: Location 2":"Employment..Location.2",
-                               " Employment: Employer 3":"Employment..Employer.3",
-                               "Employment: Title 3":"Employment..Title.3",
-                               "Employment: Duration 3":"Employment..Duration.3",
-                               "Employment: Location 3":"Employment..Location.3",
-                               " Employment: Employer 4":"Employment..Employer.4",
-                               "Employment: Title 4":"Employment..Title.4",
-                               "Employment: Duration 4":"Employment..Duration.4",
-                               "Employment: Location 4":"Employment..Location.4",
-                               " Employment: Employer 5":"Employment..Employer.5",
-                               "Employment: Title 5":"Employment..Title.5",
-                               "Employment: Duration 5":"Employment..Duration.5",
-                               "Employment: Location 5":"Employment..Location.5"})
+        alma_data = alma_data.rename(columns={"Name":"Name",
+                                   "Linkedin URL":"Linkedin.URL",
+                                   " Education: School 1":"Education..School.1",
+                                   "Education: Duration 1":"Education..Duration.1",
+                                   " Education: School 2":"Education..School.2",
+                                   "Education: Duration 2":"Education..Duration.2",
+                                   " Employment: Employer 1":"Employment..Employer.1",
+                                   "Employment: Title 1":"Employment..Title.1",
+                                   "Employment: Duration 1":"Employment..Duration.1",
+                                   "Employment: Location 1":"Employment..Location.1",
+                                   " Employment: Employer 2":"Employment..Employer.2",
+                                   "Employment: Title 2":"Employment..Title.2",
+                                   "Employment: Duration 2":"Employment..Duration.2",
+                                   "Employment: Location 2":"Employment..Location.2",
+                                   " Employment: Employer 3":"Employment..Employer.3",
+                                   "Employment: Title 3":"Employment..Title.3",
+                                   "Employment: Duration 3":"Employment..Duration.3",
+                                   "Employment: Location 3":"Employment..Location.3",
+                                   " Employment: Employer 4":"Employment..Employer.4",
+                                   "Employment: Title 4":"Employment..Title.4",
+                                   "Employment: Duration 4":"Employment..Duration.4",
+                                   "Employment: Location 4":"Employment..Location.4",
+                                   " Employment: Employer 5":"Employment..Employer.5",
+                                   "Employment: Title 5":"Employment..Title.5",
+                                   "Employment: Duration 5":"Employment..Duration.5",
+                                   "Employment: Location 5":"Employment..Location.5"})
 
 
-    relevant_data = alma_data[["Name",
-                               "Linkedin.URL",
-                               "Education..School.1",
-                               "Education..Duration.1",
-                               "Education..School.2",
-                               "Education..Duration.2",
-                               "Employment..Employer.1",
-                               "Employment..Title.1",
-                               "Employment..Duration.1",
-                               "Employment..Location.1",
-                               "Employment..Employer.2",
-                               "Employment..Title.2",
-                               "Employment..Duration.2",
-                               "Employment..Location.2",
-                               "Employment..Employer.3",
-                               "Employment..Title.3",
-                               "Employment..Duration.3",
-                               "Employment..Location.3",
-                               "Employment..Employer.4",
-                               "Employment..Title.4",
-                               "Employment..Duration.4",
-                               "Employment..Location.4",
-                               "Employment..Employer.5",
-                               "Employment..Title.5",
-                               "Employment..Duration.5",
-                               "Employment..Location.5"]]
+        relevant_data = alma_data[["Name",
+                                   "Linkedin.URL",
+                                   "Education..School.1",
+                                   "Education..Duration.1",
+                                   "Education..School.2",
+                                   "Education..Duration.2",
+                                   "Employment..Employer.1",
+                                   "Employment..Title.1",
+                                   "Employment..Duration.1",
+                                   "Employment..Location.1",
+                                   "Employment..Employer.2",
+                                   "Employment..Title.2",
+                                   "Employment..Duration.2",
+                                   "Employment..Location.2",
+                                   "Employment..Employer.3",
+                                   "Employment..Title.3",
+                                   "Employment..Duration.3",
+                                   "Employment..Location.3",
+                                   "Employment..Employer.4",
+                                   "Employment..Title.4",
+                                   "Employment..Duration.4",
+                                   "Employment..Location.4",
+                                   "Employment..Employer.5",
+                                   "Employment..Title.5",
+                                   "Employment..Duration.5",
+                                   "Employment..Location.5"]]
 
-    clean_df = pd.DataFrame(columns=["ID", "WORK_ID", "COOP_ID", "Name", "URL", "Year", "Company", "Position", "Duration",
-                                     "Start.Date", "Start.Month", "Start.Year", "End.Date.pres", "End.Month", "End.Year",
-                                     "Full.Location", "City", "Country"])
-    # print(len(clean_df))
-    count = 0
+        clean_df = pd.DataFrame(columns=["ID", "WORK_ID", "COOP_ID", "Name", "URL", "Year", "Company", "Position", "Duration",
+                                         "Start.Date", "Start.Month", "Start.Year", "End.Date.pres", "End.Month", "End.Year",
+                                         "Full.Location", "City", "Country"])
+        # print(len(clean_df))
+        count = 0
 
-    for index, row in relevant_data.iterrows():
+        for index, row in relevant_data.iterrows():
 
-        employ_title_lst = [['Employment..Title.1', 'Employment..Employer.1', 'Employment..Duration.1',
-                             "Employment..Location.1"],
-                            ['Employment..Title.2', 'Employment..Employer.2', 'Employment..Duration.2',
-                             "Employment..Location.2"],
-                            ['Employment..Title.3', 'Employment..Employer.3', 'Employment..Duration.3',
-                             "Employment..Location.3"],
-                            ['Employment..Title.4', 'Employment..Employer.4', 'Employment..Duration.4',
-                             "Employment..Location.4"],
-                            ['Employment..Title.5', 'Employment..Employer.5', 'Employment..Duration.5',
-                             "Employment..Location.5"]]
+            employ_title_lst = [['Employment..Title.1', 'Employment..Employer.1', 'Employment..Duration.1',
+                                 "Employment..Location.1"],
+                                ['Employment..Title.2', 'Employment..Employer.2', 'Employment..Duration.2',
+                                 "Employment..Location.2"],
+                                ['Employment..Title.3', 'Employment..Employer.3', 'Employment..Duration.3',
+                                 "Employment..Location.3"],
+                                ['Employment..Title.4', 'Employment..Employer.4', 'Employment..Duration.4',
+                                 "Employment..Location.4"],
+                                ['Employment..Title.5', 'Employment..Employer.5', 'Employment..Duration.5',
+                                 "Employment..Location.5"]]
 
-        for i in employ_title_lst:
-            if len(row[i[0]].strip()) != 0:
-                clean_df.loc[count,"ID"] = index
-                clean_df.loc[count, "WORK_ID"] = index
-                clean_df.loc[count, "COOP_ID"] = index
-                clean_df.loc[count, "Name"] = row["Name"]
-                clean_df.loc[count, "URL"] = row["Linkedin.URL"]
+            for i in employ_title_lst:
+                if len(row[i[0]].strip()) != 0:
+                    clean_df.loc[count,"ID"] = index
+                    clean_df.loc[count, "WORK_ID"] = index
+                    clean_df.loc[count, "COOP_ID"] = index
+                    clean_df.loc[count, "Name"] = row["Name"]
+                    clean_df.loc[count, "URL"] = row["Linkedin.URL"]
 
-                # future improvement to make this better
-                if "waterloo" in row['Education..School.2'].lower():
-                    if (len(str(row["Education..Duration.2"])) >= 4):
-                        clean_df.loc[count, "Year"] = row["Education..Duration.2"][-4:]
-                elif "waterloo" in row['Education..School.1'].lower():
-                    if (len(str(row["Education..Duration.1"])) >= 4):
-                        clean_df.loc[count, "Year"] = row["Education..Duration.1"][-4:]
+                    # future improvement to make this better
+                    if "waterloo" in row['Education..School.2'].lower():
+                        if (len(str(row["Education..Duration.2"])) >= 4):
+                            clean_df.loc[count, "Year"] = row["Education..Duration.2"][-4:]
+                    elif "waterloo" in row['Education..School.1'].lower():
+                        if (len(str(row["Education..Duration.1"])) >= 4):
+                            clean_df.loc[count, "Year"] = row["Education..Duration.1"][-4:]
 
-                # clean_df.loc[count, "Company"] = row["Employment..Employer.1"]
-                clean_df.loc[count, "Company"] = row[i[1]].replace('&amp;', '&')
-                clean_df.loc[count, "Position"] = row[i[0]].replace('&amp;', '&')
-                a = date_format(row[i[2]])
-                clean_df.loc[count,["Duration",
-                                    "Start.Date","Start.Month","Start.Year","End.Date.pres","End.Month","End.Year"]] = a
-                clean_df.loc[count, "Full.Location"] = row[i[3]]
-                clean_df.loc[count, "City"] = None
-                clean_df.loc[count, "Country"] = None
-                count = count + 1
+                    # clean_df.loc[count, "Company"] = row["Employment..Employer.1"]
+                    clean_df.loc[count, "Company"] = row[i[1]].replace('&amp;', '&')
+                    clean_df.loc[count, "Position"] = row[i[0]].replace('&amp;', '&')
+                    a = date_format(row[i[2]])
+                    clean_df.loc[count,["Duration",
+                                        "Start.Date","Start.Month","Start.Year","End.Date.pres","End.Month","End.Year"]] = a
+                    clean_df.loc[count, "Full.Location"] = row[i[3]]
+                    clean_df.loc[count, "City"] = None
+                    clean_df.loc[count, "Country"] = None
+                    count = count + 1
 
-    clean_df = input_ids(clean_df)
+        clean_df = input_ids(clean_df)
 
-    # clean_df = clean_df.sort_values(by=['ID', 'Start.Year', 'Start.Month'], ascending=True)
-    # clean_df = clean_df.reset_index(drop=True)
-    #
-    # coopcount = 1
-    # workcount = 1
-    #
-    # if clean_df.loc[0, "Year"] is not None:
-    #     if clean_df.loc[0, "Start.Year"] < clean_df.loc[0, "Year"] and clean_df.loc[0, "End.Date.pres"] != "pres":
-    #         clean_df.loc[0, "COOP_ID"] = coopcount
-    #         clean_df.loc[0, "WORK_ID"] = None
-    #         coopcount = coopcount + 1
-    #     else:
-    #         clean_df.loc[0, "WORK_ID"] = workcount
-    #         clean_df.loc[0, "COOP_ID"] = None
-    #         workcount = workcount + 1
-    # else:
-    #     clean_df.loc[0, "WORK_ID"] = None
-    #     clean_df.loc[0, "COOP_ID"] = None
-    #     workcount = workcount + 1
-    #
-    #
-    # for index, row in clean_df.iterrows():
-    #
-    #     if index == 0:
-    #         continue
-    #
-    #     if row["ID"] != clean_df.loc[index-1, 'ID']:
-    #         coopcount = 1
-    #         workcount = 1
-    #
-    #     # if row["Year"] is not None:
-    #     if len(str(row["Year"]).strip()) >= 4:
-    #         if row["Start.Year"] < row["Year"] and row["End.Date.pres"] != "pres":
-    #             row["COOP_ID"] = coopcount
-    #             row["WORK_ID"] = None
-    #             coopcount = coopcount + 1
-    #         else:
-    #             row["WORK_ID"] = workcount
-    #             row["COOP_ID"] = None
-    #             workcount = workcount + 1
-    #     else:
-    #         row["WORK_ID"] = None
-    #         row["COOP_ID"] = None
+        world_cities_df = pd.read_csv("cities_countries.csv")
 
-
-    world_cities_df = pd.read_csv("cities_countries.csv")
-
-    geolocator = Nominatim(scheme='http')
-    city1 = ""
-    country1 = ""
-    for index, row in clean_df.iterrows():
-        #geolocator = Nominatim(scheme='http')
+        geolocator = Nominatim(scheme='http')
         city1 = ""
         country1 = ""
-        try:
-            if not pd.isnull(row['Full.Location']):
-                geo = geolocator.geocode(str(row['Full.Location'].replace("Area", "").strip()))
-            else:
-                geo = ""
-            #print(geo)
-            city = GeoText(str(geo).strip()).cities
-            country = GeoText(str(geo).strip()).countries
-            #print(city, country)
-            if len(city) > 0 and len(country) > 0:
-                city1 = city[0]
-                country1 = country[0]
-            elif len(city) > 0:
-                city1 = city[0]
-            elif len(country) > 0:
-                country1 = country[0]
-            else:
-                city1 = ""
-                country1 = ""
+        for index, row in clean_df.iterrows():
+            #geolocator = Nominatim(scheme='http')
+            city1 = ""
+            country1 = ""
+            try:
+                if not pd.isnull(row['Full.Location']):
+                    geo = geolocator.geocode(str(row['Full.Location'].replace("Area", "").strip()))
+                else:
+                    geo = ""
+                #print(geo)
+                city = GeoText(str(geo).strip()).cities
+                country = GeoText(str(geo).strip()).countries
+                #print(city, country)
+                if len(city) > 0 and len(country) > 0:
+                    city1 = city[0]
+                    country1 = country[0]
+                elif len(city) > 0:
+                    city1 = city[0]
+                elif len(country) > 0:
+                    country1 = country[0]
+                else:
+                    city1 = ""
+                    country1 = ""
 
-        except:
-            if not pd.isnull(row['Full.Location']):
-                geo = row['Full.Location']
-            else:
-                geo = ""
+            except:
+                if not pd.isnull(row['Full.Location']):
+                    geo = row['Full.Location']
+                else:
+                    geo = ""
 
-            city = GeoText(str(geo)).cities
-            country = GeoText(str(geo)).countries
+                city = GeoText(str(geo)).cities
+                country = GeoText(str(geo)).countries
 
-            if len(city) > 0 and len(country) > 0:
+                if len(city) > 0 and len(country) > 0:
 
-                city1 = city[0]
-                country1 = country[0]
+                    city1 = city[0]
+                    country1 = country[0]
 
-            elif len(country) > 0:
-                df = world_cities_df[(world_cities_df['country'] == country[0])]
-                for city_df in df['name']:
-                    #Add spaces between text
-                    if city_df.lower() in geo.lower():
-                        city1 = city_df
-                        country1 = country[0]
-                        break
-                    else:
-                        city1 = ""
-                        country1 = ""
+                elif len(country) > 0:
+                    df = world_cities_df[(world_cities_df['country'] == country[0])]
+                    for city_df in df['name']:
+                        #Add spaces between text
+                        if city_df.lower() in geo.lower():
+                            city1 = city_df
+                            country1 = country[0]
+                            break
+                        else:
+                            city1 = ""
+                            country1 = ""
 
-            elif len(city) > 0:
-                df = world_cities_df[(world_cities_df['country'] == 'Canada') | (world_cities_df['country'] == 'USA')]
-                for index_x, x in df.iterrows():
+                elif len(city) > 0:
+                    df = world_cities_df[(world_cities_df['country'] == 'Canada') | (world_cities_df['country'] == 'USA')]
+                    for index_x, x in df.iterrows():
 
-                    curr_location = " " + str(geo).lower() + " "
-                    spaced_x = " " + x['name'].lower() + " "
+                        curr_location = " " + str(geo).lower() + " "
+                        spaced_x = " " + x['name'].lower() + " "
 
-                    if spaced_x in curr_location:
-                        country1 = x['country']
-                        city1 = city[0]
-                        break
+                        if spaced_x in curr_location:
+                            country1 = x['country']
+                            city1 = city[0]
+                            break
 
-            else:
-                for index_y, y in world_cities_df.iterrows():
+                else:
+                    for index_y, y in world_cities_df.iterrows():
 
-                    curr_location = " " + str(geo).lower() + " "
-                    spaced_y = " " + y['name'].lower() + " "
+                        curr_location = " " + str(geo).lower() + " "
+                        spaced_y = " " + y['name'].lower() + " "
 
-                    if spaced_y in curr_location:
-                        city1 = y['name']
-                        country1 = y['country']
-                        break
+                        if spaced_y in curr_location:
+                            city1 = y['name']
+                            country1 = y['country']
+                            break
 
-        row["City"] = city1
-        row["Country"] = country1
-        # print(row["Full.Location"], "|", city1, "|", country1)
-        print("getting location...")
+            row["City"] = city1
+            row["Country"] = country1
+            # print(row["Full.Location"], "|", city1, "|", country1)
+            print("getting location...")
 
-    # print(clean_df)
-    clean_df.to_csv("test.csv", index = False)
+        # print(clean_df)
+        clean_df.to_csv("test.csv", index = False)
 
-    masterFile = append_replace(clean_df, masterFile)
+        masterFile = append_replace(clean_df, masterFile)
 
-    masterFile.to_csv('masterfile_replace_append.csv', index=False)
+        masterFile.to_csv('masterfile_replace_append.csv', index=False)
+    else:
+        print("Input file is empty!")
