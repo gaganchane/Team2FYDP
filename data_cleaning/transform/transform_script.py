@@ -70,12 +70,6 @@ def date_format(duration):
 
 
 def append_replace(newFile, masterFile):
-    # masterFile = pd.read_csv("masterfile_replace_append.csv")
-    # masterFile = pd.read_csv("ece.csv")
-    # newFile = pd.read_csv("combined_update_mgmt_output_2 - Copy.csv")
-    #newFile = pd.read_csv("ece-new.csv")
-    # newFile = pd.read_csv("test.csv")
-    # newFile = pd.read_csv("combined_update_mgmt_output_3.csv")
 
     masterDict = {}
     newDict = {}
@@ -153,11 +147,13 @@ def append_replace(newFile, masterFile):
 
 if __name__ == '__main__':
 
-    masterFile = pd.read_csv("ece.csv")
+    # masterFile = pd.read_csv("ece.csv")
+    masterFile = pd.read_csv("masterfile_replace_append.csv")
 
     alma_data = pd.read_csv("update_mgmt_1.csv")
+    # alma_data = pd.read_csv("C:\\Users\\Joash\\Desktop\\University Stuff\\4B uni stuff\\Team2FYDP\\data_cleaning\\"
+    #                         "transform\\update_mgmt_1.csv")
 
-    # print(alma_data)
 
     alma_data = alma_data.rename(columns={"Name":"Name",
                                "Linkedin URL":"Linkedin.URL",
@@ -223,135 +219,43 @@ if __name__ == '__main__':
 
     for index, row in relevant_data.iterrows():
 
+        employ_title_lst = [['Employment..Title.1', 'Employment..Employer.1', 'Employment..Duration.1',
+                             "Employment..Location.1"],
+                            ['Employment..Title.2', 'Employment..Employer.2', 'Employment..Duration.2',
+                             "Employment..Location.2"],
+                            ['Employment..Title.3', 'Employment..Employer.3', 'Employment..Duration.3',
+                             "Employment..Location.3"],
+                            ['Employment..Title.4', 'Employment..Employer.4', 'Employment..Duration.4',
+                             "Employment..Location.4"],
+                            ['Employment..Title.5', 'Employment..Employer.5', 'Employment..Duration.5',
+                             "Employment..Location.5"]]
 
-        # if row['Employment..Title.1'] is not None:
-        if len(row['Employment..Title.1'].strip()) != 0:
-            clean_df.loc[count,"ID"] = index
-            clean_df.loc[count, "WORK_ID"] = index
-            clean_df.loc[count, "COOP_ID"] = index
-            clean_df.loc[count, "Name"] = row["Name"]
-            clean_df.loc[count, "URL"] = row["Linkedin.URL"]
+        for i in employ_title_lst:
+            if len(row[i[0]].strip()) != 0:
+                clean_df.loc[count,"ID"] = index
+                clean_df.loc[count, "WORK_ID"] = index
+                clean_df.loc[count, "COOP_ID"] = index
+                clean_df.loc[count, "Name"] = row["Name"]
+                clean_df.loc[count, "URL"] = row["Linkedin.URL"]
 
-            # future improvement to make this better
-            if "waterloo" in row['Education..School.2'].lower():
-                if (len(str(row["Education..Duration.2"])) >= 4):
-                    clean_df.loc[count, "Year"] = row["Education..Duration.2"][-4:]
-            elif "waterloo" in row['Education..School.1'].lower():
-                if (len(str(row["Education..Duration.1"])) >= 4):
-                    clean_df.loc[count, "Year"] = row["Education..Duration.1"][-4:]
+                # future improvement to make this better
+                if "waterloo" in row['Education..School.2'].lower():
+                    if (len(str(row["Education..Duration.2"])) >= 4):
+                        clean_df.loc[count, "Year"] = row["Education..Duration.2"][-4:]
+                elif "waterloo" in row['Education..School.1'].lower():
+                    if (len(str(row["Education..Duration.1"])) >= 4):
+                        clean_df.loc[count, "Year"] = row["Education..Duration.1"][-4:]
 
-            # clean_df.loc[count, "Company"] = row["Employment..Employer.1"]
-            clean_df.loc[count, "Company"] = row["Employment..Employer.1"].replace('&amp;', '&')
-            clean_df.loc[count, "Position"] = row["Employment..Title.1"].replace('&amp;', '&')
-            a = date_format(row["Employment..Duration.1"])
-            clean_df.loc[count,["Duration",
-                                "Start.Date","Start.Month","Start.Year","End.Date.pres","End.Month","End.Year"]] = a
-            clean_df.loc[count, "Full.Location"] = row["Employment..Location.1"]
-            clean_df.loc[count, "City"] = None
-            clean_df.loc[count, "Country"] = None
-            count = count + 1
-
-
-
-        # if row['Employment..Title.2'] is not None:
-        if len(row['Employment..Title.2'].strip()) != 0:
-            clean_df.loc[count,"ID"] = index
-            clean_df.loc[count, "WORK_ID"] = index
-            clean_df.loc[count, "COOP_ID"] = index
-            clean_df.loc[count, "Name"] = row["Name"]
-            clean_df.loc[count, "URL"] = row["Linkedin.URL"]
-
-            if "waterloo" in row['Education..School.2'].lower():
-                if (len(str(row["Education..Duration.2"])) >= 4):
-                    clean_df.loc[count, "Year"] = row["Education..Duration.2"][-4:]
-            elif "waterloo" in row['Education..School.1'].lower():
-                if (len(str(row["Education..Duration.1"])) >= 4):
-                    clean_df.loc[count, "Year"] = row["Education..Duration.1"][-4:]
-
-            clean_df.loc[count, "Company"] = row["Employment..Employer.2"].replace('&amp;', '&')
-            clean_df.loc[count, "Position"] = row["Employment..Title.2"].replace('&amp;', '&')
-            a = date_format(row["Employment..Duration.2"])
-            clean_df.loc[count,["Duration",
-                                "Start.Date","Start.Month","Start.Year","End.Date.pres","End.Month","End.Year"]] = a
-            clean_df.loc[count, "Full.Location"] = row["Employment..Location.2"]
-            clean_df.loc[count, "City"] = None
-            clean_df.loc[count, "Country"] = None
-            count = count + 1
-
-        # if row['Employment..Title.3'] is not None:
-        if len(row['Employment..Title.3'].strip()) != 0:
-            clean_df.loc[count,"ID"] = index
-            clean_df.loc[count, "WORK_ID"] = index
-            clean_df.loc[count, "COOP_ID"] = index
-            clean_df.loc[count, "Name"] = row["Name"]
-            clean_df.loc[count, "URL"] = row["Linkedin.URL"]
-
-            if "waterloo" in row['Education..School.2'].lower():
-                if (len(str(row["Education..Duration.2"])) >= 4):
-                    clean_df.loc[count, "Year"] = row["Education..Duration.2"][-4:]
-            elif "waterloo" in row['Education..School.1'].lower():
-                if (len(str(row["Education..Duration.1"])) >= 4):
-                    clean_df.loc[count, "Year"] = row["Education..Duration.1"][-4:]
-
-            clean_df.loc[count, "Company"] = row["Employment..Employer.3"].replace('&amp;', '&')
-            clean_df.loc[count, "Position"] = row["Employment..Title.3"].replace('&amp;', '&')
-            a = date_format(row["Employment..Duration.3"])
-            clean_df.loc[count,["Duration",
-                                "Start.Date","Start.Month","Start.Year","End.Date.pres","End.Month","End.Year"]] = a
-            clean_df.loc[count, "Full.Location"] = row["Employment..Location.3"]
-            clean_df.loc[count, "City"] = None
-            clean_df.loc[count, "Country"] = None
-            count = count + 1
-
-        # if row['Employment..Title.4'] is not None:
-        if len(row['Employment..Title.4'].strip()) != 0:
-            clean_df.loc[count,"ID"] = index
-            clean_df.loc[count, "WORK_ID"] = index
-            clean_df.loc[count, "COOP_ID"] = index
-            clean_df.loc[count, "Name"] = row["Name"]
-            clean_df.loc[count, "URL"] = row["Linkedin.URL"]
-
-            if "waterloo" in row['Education..School.2'].lower():
-                if (len(str(row["Education..Duration.2"])) >= 4):
-                    clean_df.loc[count, "Year"] = row["Education..Duration.2"][-4:]
-            elif "waterloo" in row['Education..School.1'].lower():
-                if (len(str(row["Education..Duration.1"])) >= 4):
-                    clean_df.loc[count, "Year"] = row["Education..Duration.1"][-4:]
-
-            clean_df.loc[count, "Company"] = row["Employment..Employer.4"].replace('&amp;', '&')
-            clean_df.loc[count, "Position"] = row["Employment..Title.4"].replace('&amp;', '&')
-            a = date_format(row["Employment..Duration.4"])
-            clean_df.loc[count,["Duration",
-                                "Start.Date","Start.Month","Start.Year","End.Date.pres","End.Month","End.Year"]] = a
-            clean_df.loc[count, "Full.Location"] = row["Employment..Location.4"]
-            clean_df.loc[count, "City"] = None
-            clean_df.loc[count, "Country"] = None
-            count = count + 1
-
-        # if row['Employment..Title.5'].strip() is not None:
-        if len(row['Employment..Title.5'].strip()) != 0:
-            clean_df.loc[count,"ID"] = index
-            clean_df.loc[count, "WORK_ID"] = index
-            clean_df.loc[count, "COOP_ID"] = index
-            clean_df.loc[count, "Name"] = row["Name"]
-            clean_df.loc[count, "URL"] = row["Linkedin.URL"]
-
-            if "waterloo" in row['Education..School.2'].lower():
-                if (len(str(row["Education..Duration.2"])) >= 4):
-                    clean_df.loc[count, "Year"] = row["Education..Duration.2"][-4:]
-            elif "waterloo" in row['Education..School.1'].lower():
-                if (len(str(row["Education..Duration.1"])) >= 4):
-                    clean_df.loc[count, "Year"] = row["Education..Duration.1"][-4:]
-
-            clean_df.loc[count, "Company"] = row["Employment..Employer.5"].replace('&amp;', '&')
-            clean_df.loc[count, "Position"] = row["Employment..Title.5"].replace('&amp;', '&')
-            a = date_format(row["Employment..Duration.5"])
-            clean_df.loc[count,["Duration",
-                                "Start.Date","Start.Month","Start.Year","End.Date.pres","End.Month","End.Year"]] = a
-            clean_df.loc[count, "Full.Location"] = row["Employment..Location.5"]
-            clean_df.loc[count, "City"] = None
-            clean_df.loc[count, "Country"] = None
-            count = count + 1
+                # clean_df.loc[count, "Company"] = row["Employment..Employer.1"]
+                clean_df.loc[count, "Company"] = row[i[1]].replace('&amp;', '&')
+                clean_df.loc[count, "Position"] = row[i[0]].replace('&amp;', '&')
+                a = date_format(row[i[2]])
+                clean_df.loc[count,["Duration",
+                                    "Start.Date","Start.Month","Start.Year","End.Date.pres","End.Month","End.Year"]] = a
+                clean_df.loc[count, "Full.Location"] = row[i[3]]
+                clean_df.loc[count, "City"] = None
+                clean_df.loc[count, "Country"] = None
+                count = count + 1
 
     clean_df = clean_df.sort_values(by=['ID', 'Start.Year', 'Start.Month'], ascending=True)
     clean_df = clean_df.reset_index(drop=True)
@@ -379,10 +283,6 @@ if __name__ == '__main__':
         if index == 0:
             continue
 
-        #print(clean_df.loc[index-1, 'ID'], clean_df.loc[index-1, 'Name'], clean_df.loc[index-1, 'Position'])
-        # if len(str(row['Year'])) < 4:
-        #     coopcount = 0
-        #     workcount = 0
         if row["ID"] != clean_df.loc[index-1, 'ID']:
             coopcount = 1
             workcount = 1
@@ -402,7 +302,7 @@ if __name__ == '__main__':
             row["COOP_ID"] = None
 
 
-    world_cities_df = pd.read_csv("/Users/mbr/Desktop/transform/cities_countries.csv")
+    world_cities_df = pd.read_csv("cities_countries.csv")
 
     geolocator = Nominatim(scheme='http')
     city1 = ""
@@ -482,9 +382,10 @@ if __name__ == '__main__':
 
         row["City"] = city1
         row["Country"] = country1
-        print(row["Full.Location"], "|", city1, "|", country1)
+        # print(row["Full.Location"], "|", city1, "|", country1)
+        print("getting location...")
 
-    print(clean_df)
+    # print(clean_df)
     # clean_df.to_csv("test.csv", index = False)
 
 
