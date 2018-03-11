@@ -68,9 +68,94 @@ def date_format(duration):
 
     return [final_duration, start_date, start_month_num, start_year, end_date, end_month_num, end_year]
 
+
+def append_replace(newFile, masterFile):
+    # masterFile = pd.read_csv("masterfile_replace_append.csv")
+    # masterFile = pd.read_csv("ece.csv")
+    # newFile = pd.read_csv("combined_update_mgmt_output_2 - Copy.csv")
+    #newFile = pd.read_csv("ece-new.csv")
+    # newFile = pd.read_csv("test.csv")
+    # newFile = pd.read_csv("combined_update_mgmt_output_3.csv")
+
+    masterDict = {}
+    newDict = {}
+    idDict = {}
+    for index, row in masterFile.iterrows():
+        if not pd.isnull(row['Year']):
+
+            if (len(str(row['Name']).strip()) > 0 and not pd.isnull(row['Name'])) and (len(str(int(row['Year'])).strip()) == 4) \
+                    and (len(str(row['Company']).strip()) > 0 and not pd.isnull(row['Company'])) and \
+                    (len(str(row['Position']).strip()) > 0 and not pd.isnull(row['Position'])):
+
+                masterDict[row['Name'], row['Year'], row['Company'], row['Position']] = index
+                idDict[row['Name'], row['Year']] = row['ID']
+
+    for index, row in newFile.iterrows():
+        if not pd.isnull(row['Year']):
+            if (len(str(row['Name']).strip()) > 0 and not pd.isnull(row['Name'])) and (len(str(int(row['Year'])).strip()) >= 4) \
+                    and (len(str(row['Company']).strip()) > 0 and not pd.isnull(row['Company'])) and \
+                    (len(str(row['Position']).strip()) > 0 and not pd.isnull(row['Position'])):
+
+                newDict[row['Name'], row['Year'], row['Company'], row['Position']] = 1
+
+
+    # Finds all the newrows that need to be appended to the master file
+    newRows = []
+    count = 1
+    max_id = masterFile['ID'].max()
+    dup_id_dict = {}
+    for k, v in newDict.items():
+        if k not in masterDict:
+            id_key = (k[0], k[1])
+            if (k[0], k[1]) in idDict:
+                newRows.append([idDict[id_key], k])
+            else:
+                newRows.append([max_id + count, k])
+                idDict[(k[0], k[1])] = max_id+count
+                count += 1
+    print(newRows)
+
+    # appends the rows to the master file
+    count = 1
+    for row in newRows:
+        temp_df = newFile[(newFile['Name'] == row[1][0]) & (newFile['Year'] == row[1][1]) &
+                          (newFile['Company'] == row[1][2]) & (newFile['Position'] == row[1][3])]
+        temp_df = temp_df.drop_duplicates(subset=['Name', 'Year', 'Company', 'Position'])
+        for index, temp_row in temp_df.iterrows():
+            print("appending...", temp_row['Name'], temp_row['Year'], temp_row['Company'], temp_row['Position'])
+            temp_row['ID'] = row[0]
+            masterFile = masterFile.append(temp_row[['ID', 'Name', 'Year', 'Company', 'Position', 'URL', 'Duration',
+                                                     'Start.Month', 'Start.Year', 'End.Date.pres', 'End.Month',
+                                                     'End.Year', 'Full.Location', 'City','Country','Start.Date']])
+
+    # Replaces rows in the master file for people who are appended
+    done = {}
+    for row in newRows:
+        if row[0] not in done:
+            temp_df = newFile[(newFile['Name'] == row[1][0]) & (newFile['Year'] == row[1][1])]
+            temp_df = temp_df.drop_duplicates(subset=['Name', 'Year', 'Company', 'Position'])
+            for index, temp_row in temp_df.iterrows():
+                if (temp_row['Name'], temp_row['Year'], temp_row['Company'], temp_row['Position']) in masterDict:
+                    print("replacing...", temp_row['Name'], temp_row['Year'], temp_row['Company'], temp_row['Position'])
+                    temp_new_df = newFile[(newFile['Name'] == temp_row['Name']) &
+                                          (newFile['Year'] == temp_row['Year']) &
+                                          (newFile['Company'] == temp_row['Company']) &
+                                          (newFile['Position'] == temp_row['Position'])]
+                    index_to_replace = \
+                        masterDict[(temp_row['Name'], temp_row['Year'], temp_row['Company'], temp_row['Position'])]
+
+                    if len(temp_new_df) > 0:
+                        masterFile.loc[index_to_replace, :] = temp_row
+                        masterFile.loc[index_to_replace, 'ID'] = row[0]
+            done[row[0]] = 1
+
+    return masterFile
+
 if __name__ == '__main__':
 
-    alma_data = pd.read_csv("update_mgmt_5.csv")
+    masterFile = pd.read_csv("ece.csv")
+
+    alma_data = pd.read_csv("update_mgmt_1.csv")
 
     # print(alma_data)
 
@@ -268,149 +353,142 @@ if __name__ == '__main__':
             clean_df.loc[count, "Country"] = None
             count = count + 1
 
-clean_df = clean_df.sort_values(by=['ID', 'Start.Year', 'Start.Month'], ascending=True)
-clean_df = clean_df.reset_index(drop=True)
+    clean_df = clean_df.sort_values(by=['ID', 'Start.Year', 'Start.Month'], ascending=True)
+    clean_df = clean_df.reset_index(drop=True)
 
-coopcount = 1
-workcount = 1
+    coopcount = 1
+    workcount = 1
 
-if clean_df.loc[0, "Year"] is not None:
-    if clean_df.loc[0, "Start.Year"] < clean_df.loc[1, "Year"] and clean_df.loc[1, "End.Date.pres"] != "pres":
-        clean_df.loc[0, "COOP_ID"] = coopcount
-        clean_df.loc[0, "WORK_ID"] = None
-        coopcount = coopcount + 1
-    else:
-        clean_df.loc[0, "WORK_ID"] = workcount
-        clean_df.loc[0, "COOP_ID"] = None
-        workcount = workcount + 1
-else:
-    clean_df.loc[0, "WORK_ID"] = workcount
-    clean_df.loc[0, "COOP_ID"] = None
-    workcount = workcount + 1
-
-
-for index, row in clean_df.iterrows():
-
-    if index == 0:
-        continue
-
-    #print(clean_df.loc[index-1, 'ID'], clean_df.loc[index-1, 'Name'], clean_df.loc[index-1, 'Position'])
-    # if len(str(row['Year'])) < 4:
-    #     coopcount = 0
-    #     workcount = 0
-    if row["ID"] != clean_df.loc[index-1, 'ID']:
-        coopcount = 1
-        workcount = 1
-
-    # if row["Year"] is not None:
-    if len(str(row["Year"]).strip()) >= 4:
-        if row["Start.Year"] < row["Year"] and row["End.Date.pres"] != "pres":
-            row["COOP_ID"] = coopcount
-            row["WORK_ID"] = None
+    if clean_df.loc[0, "Year"] is not None:
+        if clean_df.loc[0, "Start.Year"] < clean_df.loc[1, "Year"] and clean_df.loc[1, "End.Date.pres"] != "pres":
+            clean_df.loc[0, "COOP_ID"] = coopcount
+            clean_df.loc[0, "WORK_ID"] = None
             coopcount = coopcount + 1
         else:
-            row["WORK_ID"] = workcount
-            row["COOP_ID"] = None
+            clean_df.loc[0, "WORK_ID"] = workcount
+            clean_df.loc[0, "COOP_ID"] = None
             workcount = workcount + 1
     else:
-        row["WORK_ID"] = None
-        row["COOP_ID"] = None
+        clean_df.loc[0, "WORK_ID"] = None
+        clean_df.loc[0, "COOP_ID"] = None
+        workcount = workcount + 1
 
 
-world_cities_df = pd.read_csv("/Users/mbr/Desktop/transform/cities_countries.csv")
+    for index, row in clean_df.iterrows():
 
-geolocator = Nominatim(scheme='http')
-city1 = ""
-country1 = ""
-for index, row in clean_df.iterrows():
-    #geolocator = Nominatim(scheme='http')
+        if index == 0:
+            continue
+
+        #print(clean_df.loc[index-1, 'ID'], clean_df.loc[index-1, 'Name'], clean_df.loc[index-1, 'Position'])
+        # if len(str(row['Year'])) < 4:
+        #     coopcount = 0
+        #     workcount = 0
+        if row["ID"] != clean_df.loc[index-1, 'ID']:
+            coopcount = 1
+            workcount = 1
+
+        # if row["Year"] is not None:
+        if len(str(row["Year"]).strip()) >= 4:
+            if row["Start.Year"] < row["Year"] and row["End.Date.pres"] != "pres":
+                row["COOP_ID"] = coopcount
+                row["WORK_ID"] = None
+                coopcount = coopcount + 1
+            else:
+                row["WORK_ID"] = workcount
+                row["COOP_ID"] = None
+                workcount = workcount + 1
+        else:
+            row["WORK_ID"] = None
+            row["COOP_ID"] = None
+
+
+    world_cities_df = pd.read_csv("/Users/mbr/Desktop/transform/cities_countries.csv")
+
+    geolocator = Nominatim(scheme='http')
     city1 = ""
     country1 = ""
-    try:
-        if not pd.isnull(row['Full.Location']):
-            geo = geolocator.geocode(str(row['Full.Location'].replace("Area", "").strip()))
-        else:
-            geo = ""
-        #print(geo)
-        city = GeoText(str(geo).strip()).cities
-        country = GeoText(str(geo).strip()).countries
-        #print(city, country)
-        if len(city) > 0 and len(country) > 0:
-            city1 = city[0]
-            country1 = country[0]
-        elif len(city) > 0:
-            city1 = city[0]
-        elif len(country) > 0:
-            country1 = country[0]
-        else:
-            city1 = ""
-            country1 = ""
+    for index, row in clean_df.iterrows():
+        #geolocator = Nominatim(scheme='http')
+        city1 = ""
+        country1 = ""
+        try:
+            if not pd.isnull(row['Full.Location']):
+                geo = geolocator.geocode(str(row['Full.Location'].replace("Area", "").strip()))
+            else:
+                geo = ""
+            #print(geo)
+            city = GeoText(str(geo).strip()).cities
+            country = GeoText(str(geo).strip()).countries
+            #print(city, country)
+            if len(city) > 0 and len(country) > 0:
+                city1 = city[0]
+                country1 = country[0]
+            elif len(city) > 0:
+                city1 = city[0]
+            elif len(country) > 0:
+                country1 = country[0]
+            else:
+                city1 = ""
+                country1 = ""
 
-    except:
-        if not pd.isnull(row['Full.Location']):
-            geo = row['Full.Location']
-        else:
-            geo = ""
+        except:
+            if not pd.isnull(row['Full.Location']):
+                geo = row['Full.Location']
+            else:
+                geo = ""
 
-        city = GeoText(str(geo)).cities
-        country = GeoText(str(geo)).countries
+            city = GeoText(str(geo)).cities
+            country = GeoText(str(geo)).countries
 
-        if len(city) > 0 and len(country) > 0:
+            if len(city) > 0 and len(country) > 0:
 
-            city1 = city[0]
-            country1 = country[0]
+                city1 = city[0]
+                country1 = country[0]
 
-        elif len(country) > 0:
-            df = world_cities_df[(world_cities_df['country'] == country[0])]
-            for city_df in df['name']:
-                #Add spaces between text
-                if city_df.lower() in geo.lower():
-                    city1 = city_df
-                    country1 = country[0]
-                    break
-                else:
-                    city1 = ""
-                    country1 = ""
+            elif len(country) > 0:
+                df = world_cities_df[(world_cities_df['country'] == country[0])]
+                for city_df in df['name']:
+                    #Add spaces between text
+                    if city_df.lower() in geo.lower():
+                        city1 = city_df
+                        country1 = country[0]
+                        break
+                    else:
+                        city1 = ""
+                        country1 = ""
 
-        elif len(city) > 0:
-            df = world_cities_df[(world_cities_df['country'] == 'Canada') | (world_cities_df['country'] == 'USA')]
-            for index_x, x in df.iterrows():
+            elif len(city) > 0:
+                df = world_cities_df[(world_cities_df['country'] == 'Canada') | (world_cities_df['country'] == 'USA')]
+                for index_x, x in df.iterrows():
 
-                curr_location = " " + str(geo).lower() + " "
-                spaced_x = " " + x['name'].lower() + " "
+                    curr_location = " " + str(geo).lower() + " "
+                    spaced_x = " " + x['name'].lower() + " "
 
-                if spaced_x in curr_location:
-                    country1 = x['country']
-                    city1 = city[0]
-                    break
+                    if spaced_x in curr_location:
+                        country1 = x['country']
+                        city1 = city[0]
+                        break
 
-        else:
-            for index_y, y in world_cities_df.iterrows():
+            else:
+                for index_y, y in world_cities_df.iterrows():
 
-                curr_location = " " + str(geo).lower() + " "
-                spaced_y = " " + y['name'].lower() + " "
+                    curr_location = " " + str(geo).lower() + " "
+                    spaced_y = " " + y['name'].lower() + " "
 
-                if spaced_y in curr_location:
-                    city1 = y['name']
-                    country1 = y['country']
-                    break
+                    if spaced_y in curr_location:
+                        city1 = y['name']
+                        country1 = y['country']
+                        break
 
-    row["City"] = city1
-    row["Country"] = country1
-    print(row["Full.Location"], "|", city1, "|", country1)
+        row["City"] = city1
+        row["Country"] = country1
+        print(row["Full.Location"], "|", city1, "|", country1)
 
-print(clean_df)
-clean_df.to_csv("test.csv", index = False)
-
-
-
-
-
-
+    print(clean_df)
+    # clean_df.to_csv("test.csv", index = False)
 
 
+    masterFile = append_replace(clean_df, masterFile)
 
 
-
-
-print("FAISAL IS A PUSSY?")
+    masterFile.to_csv('masterfile_replace_append.csv', index=False)
