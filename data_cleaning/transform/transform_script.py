@@ -68,7 +68,77 @@ def date_format(duration):
 
     return [final_duration, start_date, start_month_num, start_year, end_date, end_month_num, end_year]
 
+def input_ids(masterFile):
+    masterFile.loc[:, ["WORK_ID", "COOP_ID"]] = None
+    masterFile = masterFile.sort_values(by=['ID', 'Start.Year', 'Start.Month'], ascending=True)
+    masterFile = masterFile.reset_index(drop=True)
+
+    coopcount = 1
+    workcount = 1
+
+    if masterFile.loc[0, "Year"] is not None:
+        if str(masterFile.loc[0, "Start.Year"]) < str(masterFile.loc[0, "Year"]) and \
+                        str(masterFile.loc[0, "End.Date.pres"]) != "pres":
+            masterFile.loc[0, "COOP_ID"] = coopcount
+            masterFile.loc[0, "WORK_ID"] = None
+            coopcount = coopcount + 1
+        else:
+            masterFile.loc[0, "WORK_ID"] = workcount
+            masterFile.loc[0, "COOP_ID"] = None
+            workcount = workcount + 1
+    else:
+        masterFile.loc[0, "WORK_ID"] = None
+        masterFile.loc[0, "COOP_ID"] = None
+        workcount = workcount + 1
+
+
+    for index, row in masterFile.iterrows():
+
+        if index == 0:
+            continue
+
+        if row["ID"] != masterFile.loc[index-1, 'ID']:
+            coopcount = 1
+            workcount = 1
+
+        # if row["Year"] is not None:
+        if len(str(row["Year"]).strip()) >= 4:
+            if str(row["Start.Year"]) < str(row["Year"]) and str(row["End.Date.pres"]) != "pres":
+                # print(index, "coop")
+                masterFile.loc[index, "COOP_ID"] = coopcount
+                masterFile.loc[index, "WORK_ID"] = None
+                coopcount = coopcount + 1
+            else:
+                # print(index, "work")
+                masterFile.loc[index, "WORK_ID"] = workcount
+                masterFile.loc[index, "COOP_ID"] = None
+                workcount = workcount + 1
+        else:
+            masterFile.loc[index, "WORK_ID"] = None
+            masterFile.loc[index, "COOP_ID"] = None
+
+    # # if row["Year"] is not None:
+    #     if len(str(row["Year"]).strip()) >= 4:
+    #         if str(row["Start.Year"]) < str(row["Year"]) and str(row["End.Date.pres"]) != "pres":
+    #             print(index, "coop")
+    #             row["COOP_ID"] = coopcount
+    #             row["WORK_ID"] = None
+    #             coopcount = coopcount + 1
+    #         else:
+    #             print(index, "work")
+    #             row["WORK_ID"] = workcount
+    #             row["COOP_ID"] = None
+    #             workcount = workcount + 1
+    #     else:
+    #         row["WORK_ID"] = None
+    #         row["COOP_ID"] = None
+
+    return masterFile
+
 def append_replace(newFile, masterFile):
+
+    # if ['ID', 'WORK_ID', 'COOP_ID', 'Name', 'URL', 'Year', 'Company', 'Position', 'Duration', 'Start.Date', 'Start.Month'
+    #     'Start.Year', 'End.Date.pres', 'End.Month', 'End.Year', 'Full.Location', 'City', 'Country'] in masterFile.columns:
 
     masterDict = {}
     newDict = {}
@@ -140,7 +210,10 @@ def append_replace(newFile, masterFile):
                         masterFile.loc[index_to_replace, :] = temp_row
                         masterFile.loc[index_to_replace, 'ID'] = row[0]
             done[row[0]] = 1
-
+    # else:
+    #     print('Master file is incorrect. Does not have the appropriate columns.')
+    #     masterFile = newFile
+    masterFile = input_ids(masterFile)
     return masterFile
 
 if __name__ == '__main__':
@@ -255,49 +328,51 @@ if __name__ == '__main__':
                 clean_df.loc[count, "Country"] = None
                 count = count + 1
 
-    clean_df = clean_df.sort_values(by=['ID', 'Start.Year', 'Start.Month'], ascending=True)
-    clean_df = clean_df.reset_index(drop=True)
+    clean_df = input_ids(clean_df)
 
-    coopcount = 1
-    workcount = 1
-
-    if clean_df.loc[0, "Year"] is not None:
-        if clean_df.loc[0, "Start.Year"] < clean_df.loc[1, "Year"] and clean_df.loc[1, "End.Date.pres"] != "pres":
-            clean_df.loc[0, "COOP_ID"] = coopcount
-            clean_df.loc[0, "WORK_ID"] = None
-            coopcount = coopcount + 1
-        else:
-            clean_df.loc[0, "WORK_ID"] = workcount
-            clean_df.loc[0, "COOP_ID"] = None
-            workcount = workcount + 1
-    else:
-        clean_df.loc[0, "WORK_ID"] = None
-        clean_df.loc[0, "COOP_ID"] = None
-        workcount = workcount + 1
-
-
-    for index, row in clean_df.iterrows():
-
-        if index == 0:
-            continue
-
-        if row["ID"] != clean_df.loc[index-1, 'ID']:
-            coopcount = 1
-            workcount = 1
-
-        # if row["Year"] is not None:
-        if len(str(row["Year"]).strip()) >= 4:
-            if row["Start.Year"] < row["Year"] and row["End.Date.pres"] != "pres":
-                row["COOP_ID"] = coopcount
-                row["WORK_ID"] = None
-                coopcount = coopcount + 1
-            else:
-                row["WORK_ID"] = workcount
-                row["COOP_ID"] = None
-                workcount = workcount + 1
-        else:
-            row["WORK_ID"] = None
-            row["COOP_ID"] = None
+    # clean_df = clean_df.sort_values(by=['ID', 'Start.Year', 'Start.Month'], ascending=True)
+    # clean_df = clean_df.reset_index(drop=True)
+    #
+    # coopcount = 1
+    # workcount = 1
+    #
+    # if clean_df.loc[0, "Year"] is not None:
+    #     if clean_df.loc[0, "Start.Year"] < clean_df.loc[0, "Year"] and clean_df.loc[0, "End.Date.pres"] != "pres":
+    #         clean_df.loc[0, "COOP_ID"] = coopcount
+    #         clean_df.loc[0, "WORK_ID"] = None
+    #         coopcount = coopcount + 1
+    #     else:
+    #         clean_df.loc[0, "WORK_ID"] = workcount
+    #         clean_df.loc[0, "COOP_ID"] = None
+    #         workcount = workcount + 1
+    # else:
+    #     clean_df.loc[0, "WORK_ID"] = None
+    #     clean_df.loc[0, "COOP_ID"] = None
+    #     workcount = workcount + 1
+    #
+    #
+    # for index, row in clean_df.iterrows():
+    #
+    #     if index == 0:
+    #         continue
+    #
+    #     if row["ID"] != clean_df.loc[index-1, 'ID']:
+    #         coopcount = 1
+    #         workcount = 1
+    #
+    #     # if row["Year"] is not None:
+    #     if len(str(row["Year"]).strip()) >= 4:
+    #         if row["Start.Year"] < row["Year"] and row["End.Date.pres"] != "pres":
+    #             row["COOP_ID"] = coopcount
+    #             row["WORK_ID"] = None
+    #             coopcount = coopcount + 1
+    #         else:
+    #             row["WORK_ID"] = workcount
+    #             row["COOP_ID"] = None
+    #             workcount = workcount + 1
+    #     else:
+    #         row["WORK_ID"] = None
+    #         row["COOP_ID"] = None
 
 
     world_cities_df = pd.read_csv("cities_countries.csv")
