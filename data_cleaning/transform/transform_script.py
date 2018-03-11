@@ -68,7 +68,6 @@ def date_format(duration):
 
     return [final_duration, start_date, start_month_num, start_year, end_date, end_month_num, end_year]
 
-
 def append_replace(newFile, masterFile):
 
     masterDict = {}
@@ -81,8 +80,8 @@ def append_replace(newFile, masterFile):
                     and (len(str(row['Company']).strip()) > 0 and not pd.isnull(row['Company'])) and \
                     (len(str(row['Position']).strip()) > 0 and not pd.isnull(row['Position'])):
 
-                masterDict[row['Name'], row['Year'], row['Company'], row['Position']] = index
-                idDict[row['Name'], row['Year']] = row['ID']
+                masterDict[str(row['Name']), str(int(row['Year'])), str(row['Company']), str(row['Position'])] = index
+                idDict[str(row['Name']), str(int(row['Year']))] = row['ID']
 
     for index, row in newFile.iterrows():
         if not pd.isnull(row['Year']):
@@ -90,8 +89,7 @@ def append_replace(newFile, masterFile):
                     and (len(str(row['Company']).strip()) > 0 and not pd.isnull(row['Company'])) and \
                     (len(str(row['Position']).strip()) > 0 and not pd.isnull(row['Position'])):
 
-                newDict[row['Name'], row['Year'], row['Company'], row['Position']] = 1
-
+                newDict[str(row['Name']), str(int(row['Year'])), str(row['Company']), str(row['Position'])] = 1
 
     # Finds all the newrows that need to be appended to the master file
     newRows = []
@@ -150,7 +148,8 @@ if __name__ == '__main__':
     # masterFile = pd.read_csv("ece.csv")
     masterFile = pd.read_csv("masterfile_replace_append.csv")
 
-    alma_data = pd.read_csv("update_mgmt_1.csv")
+    alma_data = pd.read_csv("quickquicktest.csv")
+    # alma_data = pd.read_csv("update_mgmt_1.csv")
     # alma_data = pd.read_csv("C:\\Users\\Joash\\Desktop\\University Stuff\\4B uni stuff\\Team2FYDP\\data_cleaning\\"
     #                         "transform\\update_mgmt_1.csv")
 
@@ -209,8 +208,7 @@ if __name__ == '__main__':
                                "Employment..Title.5",
                                "Employment..Duration.5",
                                "Employment..Location.5"]]
-    # print(relevant_data)
-    # print(relevant_data.iloc[3]['Employment..Location.1'])
+
     clean_df = pd.DataFrame(columns=["ID", "WORK_ID", "COOP_ID", "Name", "URL", "Year", "Company", "Position", "Duration",
                                      "Start.Date", "Start.Month", "Start.Year", "End.Date.pres", "End.Month", "End.Year",
                                      "Full.Location", "City", "Country"])
@@ -386,10 +384,8 @@ if __name__ == '__main__':
         print("getting location...")
 
     # print(clean_df)
-    # clean_df.to_csv("test.csv", index = False)
-
+    clean_df.to_csv("test.csv", index = False)
 
     masterFile = append_replace(clean_df, masterFile)
-
 
     masterFile.to_csv('masterfile_replace_append.csv', index=False)

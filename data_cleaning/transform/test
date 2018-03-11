@@ -1,5 +1,0 @@
-string = "london is the best"
-substring = "London"
-
-if substring in string:
-    print(True)
