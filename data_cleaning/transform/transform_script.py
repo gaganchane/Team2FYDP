@@ -117,28 +117,9 @@ def input_ids(masterFile):
             masterFile.loc[index, "WORK_ID"] = None
             masterFile.loc[index, "COOP_ID"] = None
 
-    # # if row["Year"] is not None:
-    #     if len(str(row["Year"]).strip()) >= 4:
-    #         if str(row["Start.Year"]) < str(row["Year"]) and str(row["End.Date.pres"]) != "pres":
-    #             print(index, "coop")
-    #             row["COOP_ID"] = coopcount
-    #             row["WORK_ID"] = None
-    #             coopcount = coopcount + 1
-    #         else:
-    #             print(index, "work")
-    #             row["WORK_ID"] = workcount
-    #             row["COOP_ID"] = None
-    #             workcount = workcount + 1
-    #     else:
-    #         row["WORK_ID"] = None
-    #         row["COOP_ID"] = None
-
     return masterFile
 
 def append_replace(newFile, masterFile):
-
-    # if ['ID', 'WORK_ID', 'COOP_ID', 'Name', 'URL', 'Year', 'Company', 'Position', 'Duration', 'Start.Date', 'Start.Month'
-    #     'Start.Year', 'End.Date.pres', 'End.Month', 'End.Year', 'Full.Location', 'City', 'Country'] in masterFile.columns:
 
     masterDict = {}
     newDict = {}
@@ -210,18 +191,17 @@ def append_replace(newFile, masterFile):
                         masterFile.loc[index_to_replace, :] = temp_row
                         masterFile.loc[index_to_replace, 'ID'] = row[0]
             done[row[0]] = 1
-    # else:
-    #     print('Master file is incorrect. Does not have the appropriate columns.')
-    #     masterFile = newFile
+
     masterFile = input_ids(masterFile)
     return masterFile
 
 if __name__ == '__main__':
 
-    masterFile = pd.read_csv("ece.csv")
-    # masterFile = pd.read_csv("masterfile_replace_append.csv")
+    # masterFile = pd.read_csv("ece.csv")
+    masterFile = pd.read_csv("masterfile_replace_append.csv")
 
-    alma_data = pd.read_csv("quickquicktest.csv")
+    # alma_data = pd.read_csv("quickquicktest.csv")
+    alma_data = pd.read_csv("update_mgmt_0.csv")
 
     if not alma_data.empty:
     # alma_data = pd.read_csv("update_mgmt_1.csv")
@@ -289,9 +269,7 @@ if __name__ == '__main__':
                                          "Full.Location", "City", "Country"])
         # print(len(clean_df))
         count = 0
-
         for index, row in relevant_data.iterrows():
-
             employ_title_lst = [['Employment..Title.1', 'Employment..Employer.1', 'Employment..Duration.1',
                                  "Employment..Location.1"],
                                 ['Employment..Title.2', 'Employment..Employer.2', 'Employment..Duration.2',
@@ -304,6 +282,20 @@ if __name__ == '__main__':
                                  "Employment..Location.5"]]
 
             for i in employ_title_lst:
+                #ADDED CODE HERE
+                #Checks if a person has a year or not and continues if the person doesn't
+                if ("waterloo" in row['Education..School.2'].lower()) and (len(str(row["Education..Duration.2"])) >= 4):
+                    # if (len(str(row["Education..Duration.2"])) >= 4):
+                    year = row["Education..Duration.2"][-4:]
+                elif ("waterloo" in row['Education..School.1'].lower()) and (len(str(row["Education..Duration.1"])) >= 4):
+                    year = row["Education..Duration.1"][-4:]
+                else:
+                    continue
+
+                if (pd.isnull(row[i[0]]) == True) or (pd.isnull(row[i[1]]) == True):
+                    continue
+                #END OF ADDED CODE BLOCK
+
                 if len(row[i[0]].strip()) != 0:
                     clean_df.loc[count,"ID"] = index
                     clean_df.loc[count, "WORK_ID"] = index
@@ -311,13 +303,9 @@ if __name__ == '__main__':
                     clean_df.loc[count, "Name"] = row["Name"]
                     clean_df.loc[count, "URL"] = row["Linkedin.URL"]
 
-                    # future improvement to make this better
-                    if "waterloo" in row['Education..School.2'].lower():
-                        if (len(str(row["Education..Duration.2"])) >= 4):
-                            clean_df.loc[count, "Year"] = row["Education..Duration.2"][-4:]
-                    elif "waterloo" in row['Education..School.1'].lower():
-                        if (len(str(row["Education..Duration.1"])) >= 4):
-                            clean_df.loc[count, "Year"] = row["Education..Duration.1"][-4:]
+                    #ADDED CODE HERE
+                    clean_df.loc[count, "Year"] = year
+                    # END OF ADDED CODE BLOCK
 
                     # clean_df.loc[count, "Company"] = row["Employment..Employer.1"]
                     clean_df.loc[count, "Company"] = row[i[1]].replace('&amp;', '&')
@@ -330,93 +318,95 @@ if __name__ == '__main__':
                     clean_df.loc[count, "Country"] = None
                     count = count + 1
 
-        clean_df = input_ids(clean_df)
+        #ADDED AN IF STATEMENT HERE FOR AN EDGE CASE
+        if not clean_df.empty:
+            clean_df = input_ids(clean_df)
 
-        world_cities_df = pd.read_csv("cities_countries.csv")
+            world_cities_df = pd.read_csv("cities_countries.csv")
 
-        geolocator = Nominatim(scheme='http')
-        city1 = ""
-        country1 = ""
-        for index, row in clean_df.iterrows():
-            #geolocator = Nominatim(scheme='http')
+            geolocator = Nominatim(scheme='http')
             city1 = ""
             country1 = ""
-            try:
-                if not pd.isnull(row['Full.Location']):
-                    geo = geolocator.geocode(str(row['Full.Location'].replace("Area", "").strip()))
-                else:
-                    geo = ""
-                #print(geo)
-                city = GeoText(str(geo).strip()).cities
-                country = GeoText(str(geo).strip()).countries
-                #print(city, country)
-                if len(city) > 0 and len(country) > 0:
-                    city1 = city[0]
-                    country1 = country[0]
-                elif len(city) > 0:
-                    city1 = city[0]
-                elif len(country) > 0:
-                    country1 = country[0]
-                else:
-                    city1 = ""
-                    country1 = ""
+            for index, row in clean_df.iterrows():
 
-            except:
-                if not pd.isnull(row['Full.Location']):
-                    geo = row['Full.Location']
-                else:
-                    geo = ""
+                city1 = ""
+                country1 = ""
+                try:
+                    if not pd.isnull(row['Full.Location']):
+                        geo = geolocator.geocode(str(row['Full.Location'].replace("Area", "").strip()))
+                    else:
+                        geo = ""
+                    #print(geo)
+                    city = GeoText(str(geo).strip()).cities
+                    country = GeoText(str(geo).strip()).countries
+                    #print(city, country)
+                    if len(city) > 0 and len(country) > 0:
+                        city1 = city[0]
+                        country1 = country[0]
+                    elif len(city) > 0:
+                        city1 = city[0]
+                    elif len(country) > 0:
+                        country1 = country[0]
+                    else:
+                        city1 = ""
+                        country1 = ""
 
-                city = GeoText(str(geo)).cities
-                country = GeoText(str(geo)).countries
+                except:
+                    if not pd.isnull(row['Full.Location']):
+                        geo = row['Full.Location']
+                    else:
+                        geo = ""
 
-                if len(city) > 0 and len(country) > 0:
+                    city = GeoText(str(geo)).cities
+                    country = GeoText(str(geo)).countries
 
-                    city1 = city[0]
-                    country1 = country[0]
+                    if len(city) > 0 and len(country) > 0:
 
-                elif len(country) > 0:
-                    df = world_cities_df[(world_cities_df['country'] == country[0])]
-                    for city_df in df['name']:
-                        #Add spaces between text
-                        if city_df.lower() in geo.lower():
-                            city1 = city_df
-                            country1 = country[0]
-                            break
-                        else:
-                            city1 = ""
-                            country1 = ""
+                        city1 = city[0]
+                        country1 = country[0]
 
-                elif len(city) > 0:
-                    df = world_cities_df[(world_cities_df['country'] == 'Canada') | (world_cities_df['country'] == 'USA')]
-                    for index_x, x in df.iterrows():
+                    elif len(country) > 0:
+                        df = world_cities_df[(world_cities_df['country'] == country[0])]
+                        for city_df in df['name']:
+                            #Add spaces between text
+                            if city_df.lower() in geo.lower():
+                                city1 = city_df
+                                country1 = country[0]
+                                break
+                            else:
+                                city1 = ""
+                                country1 = ""
 
-                        curr_location = " " + str(geo).lower() + " "
-                        spaced_x = " " + x['name'].lower() + " "
+                    elif len(city) > 0:
+                        df = world_cities_df[(world_cities_df['country'] == 'Canada') | (world_cities_df['country'] == 'USA')]
+                        for index_x, x in df.iterrows():
 
-                        if spaced_x in curr_location:
-                            country1 = x['country']
-                            city1 = city[0]
-                            break
+                            curr_location = " " + str(geo).lower() + " "
+                            spaced_x = " " + x['name'].lower() + " "
 
-                else:
-                    for index_y, y in world_cities_df.iterrows():
+                            if spaced_x in curr_location:
+                                country1 = x['country']
+                                city1 = city[0]
+                                break
 
-                        curr_location = " " + str(geo).lower() + " "
-                        spaced_y = " " + y['name'].lower() + " "
+                    else:
+                        for index_y, y in world_cities_df.iterrows():
 
-                        if spaced_y in curr_location:
-                            city1 = y['name']
-                            country1 = y['country']
-                            break
+                            curr_location = " " + str(geo).lower() + " "
+                            spaced_y = " " + y['name'].lower() + " "
 
-            row["City"] = city1
-            row["Country"] = country1
-            # print(row["Full.Location"], "|", city1, "|", country1)
-            print("getting location...")
+                            if spaced_y in curr_location:
+                                city1 = y['name']
+                                country1 = y['country']
+                                break
+
+                row["City"] = city1
+                row["Country"] = country1
+                # print(row["Full.Location"], "|", city1, "|", country1)
+                print("getting location...")
 
         # print(clean_df)
-        clean_df.to_csv("test.csv", index = False)
+        # clean_df.to_csv("test.csv", index = False)
 
         masterFile = append_replace(clean_df, masterFile)
 
