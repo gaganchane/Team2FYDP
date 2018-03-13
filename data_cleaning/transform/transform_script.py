@@ -4,6 +4,9 @@ import numpy as nm
 from numpy import array
 from geopy.geocoders import Nominatim
 from geotext import GeoText
+#ADDED NEW LIBRARY
+from datetime import datetime
+
 
 def date_format(duration):
     month_dic = {"Jan": "01", "Feb": "02", "Mar": "03", "Apr": "04", "May": "05", "Jun": "06", "Jul": "07",
@@ -66,7 +69,22 @@ def date_format(duration):
 
         final_duration = start_date + "-" + end_date
 
-    return [final_duration, start_date, start_month_num, start_year, end_date, end_month_num, end_year]
+    # ADDED CODE BLOCK
+    delta = None
+    if (end_month_num != None) and (start_month_num != None):
+        if end_date == "pres":
+            end_date_format = datetime(year=datetime.now().year, month=datetime.now().month, day=1)
+            start_date_format = datetime(year=int(start_year), month=int(start_month_num), day=1)
+        else:
+            end_date_format = datetime(year=int(end_year), month=int(end_month_num), day=1)
+            start_date_format = datetime(year=int(start_year), month=int(start_month_num), day=1)
+        delta = round(((end_date_format-start_date_format).days/365), 1)
+
+
+
+
+    return [final_duration, start_date, start_month_num, start_year, end_date, end_month_num, end_year, delta]
+        #END OF ADDED CODE BLOCK
 
 def input_ids(masterFile):
     masterFile.loc[:, ["WORK_ID", "COOP_ID"]] = None
@@ -169,7 +187,8 @@ def append_replace(newFile, masterFile):
             temp_row['ID'] = row[0]
             masterFile = masterFile.append(temp_row[['ID', 'Name', 'Year', 'Company', 'Position', 'URL', 'Duration',
                                                      'Start.Month', 'Start.Year', 'End.Date.pres', 'End.Month',
-                                                     'End.Year', 'Full.Location', 'City','Country','Start.Date']])
+                                                     'End.Year', 'Full.Location', 'City','Country','Start.Date',
+                                                     "Job.Duration"]])
 
     # Replaces rows in the master file for people who are appended
     done = {}
@@ -197,11 +216,10 @@ def append_replace(newFile, masterFile):
 
 if __name__ == '__main__':
 
-    # masterFile = pd.read_csv("ece.csv")
     masterFile = pd.read_csv("masterfile_replace_append.csv")
 
-    # alma_data = pd.read_csv("quickquicktest.csv")
-    alma_data = pd.read_csv("update_mgmt_0.csv")
+    alma_data = pd.read_csv("quickquicktest.csv")
+    # alma_data = pd.read_csv("update_mgmt_0.csv")
 
     if not alma_data.empty:
     # alma_data = pd.read_csv("update_mgmt_1.csv")
@@ -266,7 +284,7 @@ if __name__ == '__main__':
 
         clean_df = pd.DataFrame(columns=["ID", "WORK_ID", "COOP_ID", "Name", "URL", "Year", "Company", "Position", "Duration",
                                          "Start.Date", "Start.Month", "Start.Year", "End.Date.pres", "End.Month", "End.Year",
-                                         "Full.Location", "City", "Country"])
+                                         "Full.Location", "City", "Country", "Job.Duration"])
         # print(len(clean_df))
         count = 0
         for index, row in relevant_data.iterrows():
@@ -285,7 +303,6 @@ if __name__ == '__main__':
                 #ADDED CODE HERE
                 #Checks if a person has a year or not and continues if the person doesn't
                 if ("waterloo" in row['Education..School.2'].lower()) and (len(str(row["Education..Duration.2"])) >= 4):
-                    # if (len(str(row["Education..Duration.2"])) >= 4):
                     year = row["Education..Duration.2"][-4:]
                 elif ("waterloo" in row['Education..School.1'].lower()) and (len(str(row["Education..Duration.1"])) >= 4):
                     year = row["Education..Duration.1"][-4:]
@@ -307,12 +324,13 @@ if __name__ == '__main__':
                     clean_df.loc[count, "Year"] = year
                     # END OF ADDED CODE BLOCK
 
-                    # clean_df.loc[count, "Company"] = row["Employment..Employer.1"]
                     clean_df.loc[count, "Company"] = row[i[1]].replace('&amp;', '&')
                     clean_df.loc[count, "Position"] = row[i[0]].replace('&amp;', '&')
                     a = date_format(row[i[2]])
+                    #ADDED CODE FOR JOB DURATION
                     clean_df.loc[count,["Duration",
-                                        "Start.Date","Start.Month","Start.Year","End.Date.pres","End.Month","End.Year"]] = a
+                                        "Start.Date","Start.Month","Start.Year","End.Date.pres","End.Month","End.Year",
+                                        "Job.Duration"]] = a
                     clean_df.loc[count, "Full.Location"] = row[i[3]]
                     clean_df.loc[count, "City"] = None
                     clean_df.loc[count, "Country"] = None
@@ -333,7 +351,11 @@ if __name__ == '__main__':
                 country1 = ""
                 try:
                     if not pd.isnull(row['Full.Location']):
-                        geo = geolocator.geocode(str(row['Full.Location'].replace("Area", "").strip()))
+                        #ADDED CODE
+                        loc = str(row['Full.Location'].replace("Area", "").strip())
+                        loc = str(row['Full.Location'].replace("Greater", "").strip())
+                        geo = geolocator.geocode(loc)
+                        #END OF ADDED CODE BLOCK
                     else:
                         geo = ""
                     #print(geo)

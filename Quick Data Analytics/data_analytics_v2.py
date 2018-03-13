@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-filepath = 'C:\\Users\\Joash\\Desktop\\University Stuff\\4B uni stuff\\Network Graph\\Quick Data Analytics\\mgmt_data_v5'
+filepath = 'mgmt_data_v5'
 
 all_df = pd.read_csv(filepath + '.csv')
 # print(all_df)
