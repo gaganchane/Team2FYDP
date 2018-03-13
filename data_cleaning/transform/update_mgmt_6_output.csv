@@ -1,0 +1,94 @@
+ID,WORK_ID,COOP_ID,Name,URL,Year,Company,Position,Duration,Start.Date,Start.Month,Start.Year,End.Date.pres,End.Month,End.Year,Full.Location,City,Country,Job.Duration
+0,,1,Sami Nouralla,https://www.linkedin.com/in/sami-nouralla-a67382136/,2017, Marsh Canada Limited,Software Architect/Designer,01/2016-05/2016,01/2016,01,2016,05/2016,05,2016,Toronto Canada Area,,,0.3
+0,,2,Sami Nouralla,https://www.linkedin.com/in/sami-nouralla-a67382136/,2017, HOOPP (Healthcare of Ontario Pension Plan),Software Developer,09/2016-12/2016,09/2016,09,2016,12/2016,12,2016,Toronto Canada Area,,,0.2
+0,1,,Sami Nouralla,https://www.linkedin.com/in/sami-nouralla-a67382136/,2017, TD,Software Developer,07/2017-pres,07/2017,07,2017,pres,pres,pres,Toronto Canada Area,,,0.7
+1,,1,Andy Toulis,https://www.linkedin.com/in/toulis/,2017, Facebook,Data Scientist,01/2016-04/2016,01/2016,01,2016,04/2016,04,2016,Toronto,Toronto,Canada,0.2
+1,,2,Andy Toulis,https://www.linkedin.com/in/toulis/,2017, University of Waterloo,Research Assistant Network Science,05/2016-08/2016,05/2016,05,2016,08/2016,08,2016,,,,0.3
+1,,3,Andy Toulis,https://www.linkedin.com/in/toulis/,2017, Facebook,Data Scientist,09/2016-12/2016,09/2016,09,2016,12/2016,12,2016,San Francisco Bay Area,,United States,0.2
+1,1,,Andy Toulis,https://www.linkedin.com/in/toulis/,2017, University of Waterloo,Research Assistant Social Media Text Mining,01/2017-04/2017,01/2017,01,2017,04/2017,04,2017,,,,0.2
+1,2,,Andy Toulis,https://www.linkedin.com/in/toulis/,2017, Uber Advanced Technologies Group,Deep Learning & Computer Vision Researcher,06/2017-pres,06/2017,06,2017,pres,pres,pres,Toronto Canada Area,,,0.7
+2,,1,Fernando Espinoza CAPM,https://www.linkedin.com/in/f-espinoza/,2017, TD,Business Analyst,09/2014-12/2014,09/2014,09,2014,12/2014,12,2014,Toronto Canada Area,,,0.2
+2,,2,Fernando Espinoza CAPM,https://www.linkedin.com/in/f-espinoza/,2017, Rule Financial (Part of the GFT Group),Management Consultant,05/2015-09/2015,05/2015,05,2015,09/2015,09,2015,New York City,New York,United States,0.3
+2,,3,Fernando Espinoza CAPM,https://www.linkedin.com/in/f-espinoza/,2017, Complete Solar,Software Engineer,01/2016-04/2016,01/2016,01,2016,04/2016,04,2016,San Francisco Bay Area,,United States,0.2
+2,,4,Fernando Espinoza CAPM,https://www.linkedin.com/in/f-espinoza/,2017, Zynga,Product Manager,09/2016-12/2016,09/2016,09,2016,12/2016,12,2016,Toronto Canada Area,,,0.2
+2,1,,Fernando Espinoza CAPM,https://www.linkedin.com/in/f-espinoza/,2017, Tinder Inc.,International Growth,08/2017-pres,08/2017,08,2017,pres,pres,pres,Greater Los Angeles Area,Madrid,,0.6
+3,,1,Leah Pinder,https://www.linkedin.com/in/leah-pinder/,2017, Sun Life Financial,Lean Solutions Consultant,08/2014-12/2014,08/2014,08,2014,12/2014,12,2014,Kitchener Canada Area,,,0.3
+3,,2,Leah Pinder,https://www.linkedin.com/in/leah-pinder/,2017, Precima Inc.,Data and Technology Co-op,04/2015-08/2015,04/2015,04,2015,08/2015,08,2015,Toronto Canada Area,,,0.3
+3,,3,Leah Pinder,https://www.linkedin.com/in/leah-pinder/,2017, Synaptive Medical,Software Developer,01/2016-04/2016,01/2016,01,2016,04/2016,04,2016,Toronto Canada Area,,,0.2
+3,,4,Leah Pinder,https://www.linkedin.com/in/leah-pinder/,2017, UPS Supply Chain Solutions,Solutions Specialist,09/2016-12/2016,09/2016,09,2016,12/2016,12,2016,Burlington Ontario,Burlington,Canada,0.2
+3,1,,Leah Pinder,https://www.linkedin.com/in/leah-pinder/,2017, Arup,Airport Analyst,06/2017-pres,06/2017,06,2017,pres,pres,pres,Toronto Canada Area,,,0.7
+4,1,,Phil Everson,https://www.linkedin.com/in/phileverson/,2017, EverTek Solutions,Founder/Developer,09/2012-pres,09/2012,09,2012,pres,pres,pres,Waterloo Ontario,Waterloo,Canada,5.5
+4,2,,Phil Everson,https://www.linkedin.com/in/phileverson/,2017, GooseChase Adventures,VP Education,06/2014-pres,06/2014,06,2014,pres,pres,pres,Waterloo Ontario,Waterloo,Canada,3.8
+4,,1,Phil Everson,https://www.linkedin.com/in/phileverson/,2017, Entrepreneurship Society at UWaterloo,President,04/2015-09/2016,04/2015,04,2015,09/2016,09,2016,Waterloo Ontario,Waterloo,Canada,1.4
+4,3,,Phil Everson,https://www.linkedin.com/in/phileverson/,2017, University of Waterloo,Velocity Startup Coach,09/2016-pres,09/2016,09,2016,pres,pres,pres,Waterloo Ontario,Waterloo,Canada,1.5
+4,,2,Phil Everson,https://www.linkedin.com/in/phileverson/,2017, University of Waterloo,Entrepreneur in Residence,09/2016-04/2017,09/2016,09,2016,04/2017,04,2017,Waterloo Ontario,Waterloo,Canada,0.6
+5,,1,Khalid El-Atab,https://www.linkedin.com/in/khalid-el-atab-b22bb463/,2017, Rockwell Automation,Materials Process Engineer,09/2014-12/2014,09/2014,09,2014,12/2014,12,2014,,,,0.2
+5,,2,Khalid El-Atab,https://www.linkedin.com/in/khalid-el-atab-b22bb463/,2017, Magna International,Process Engineer,05/2015-09/2015,05/2015,05,2015,09/2015,09,2015,Newmarket Canada,Newmarket,Canada,0.3
+5,,3,Khalid El-Atab,https://www.linkedin.com/in/khalid-el-atab-b22bb463/,2017, Magna Closures Magna Mirrors & Magna Roof Systems,Quality Systems Engineer Co-op,01/2016-04/2016,01/2016,01,2016,04/2016,04,2016,Newmarket Canada,Newmarket,Canada,0.2
+5,,4,Khalid El-Atab,https://www.linkedin.com/in/khalid-el-atab-b22bb463/,2017, Marsh,Business Analyst,08/2016-12/2016,08/2016,08,2016,12/2016,12,2016,Toronto Canada Area,,,0.3
+5,1,,Khalid El-Atab,https://www.linkedin.com/in/khalid-el-atab-b22bb463/,2017, Marsh,Business Analyst Consultant,04/2017-pres,04/2017,04,2017,pres,pres,pres,Toronto Canada Area,,,0.9
+6,,1,Rabeea Malik,https://www.linkedin.com/in/rabeea-malik-895b038a/,2016, Maple Leaf Foods Inc (Rothsay),Production Analyst,01/2013-04/2013,01/2013,01,2013,04/2013,04,2013,Moorefield Canada,Ontario,Canada,0.2
+6,,2,Rabeea Malik,https://www.linkedin.com/in/rabeea-malik-895b038a/,2016, Enwave Energy Corporation,Maintenance Coordinator Assistant,09/2013-12/2013,09/2013,09,2013,12/2013,12,2013,Toronto Canada Area,,,0.2
+6,,3,Rabeea Malik,https://www.linkedin.com/in/rabeea-malik-895b038a/,2016, BlackBerry,Operations Coordinator,04/2014-08/2014,04/2014,04,2014,08/2014,08,2014,Waterloo Canada,Waterloo,Canada,0.3
+6,1,,Rabeea Malik,https://www.linkedin.com/in/rabeea-malik-895b038a/,2016, SunLife,Application Developer,01/2016-pres,01/2016,01,2016,pres,pres,pres,Waterloo Canada,Waterloo,Canada,2.2
+6,2,,Rabeea Malik,https://www.linkedin.com/in/rabeea-malik-895b038a/,2016, Accenture,Business & Technology Delivery Analyst,05/2017-pres,05/2017,05,2017,pres,pres,pres,Toronto Canada Area,,,0.8
+7,,1,Hannah Gautreau,https://www.linkedin.com/in/hannahgautreau/,2017, University of Waterloo,Engineering Federation Orientation Committee Member,11/2014-11/2015,11/2014,11,2014,11/2015,11,2015,Waterloo ON,Waterloo,Canada,1.0
+7,,2,Hannah Gautreau,https://www.linkedin.com/in/hannahgautreau/,2017, TD,Software Developer,04/2015-07/2015,04/2015,04,2015,07/2015,07,2015,Kitchener Canada Area,,,0.2
+7,,3,Hannah Gautreau,https://www.linkedin.com/in/hannahgautreau/,2017, Morgan Stanley,Technology Analyst,01/2016-04/2016,01/2016,01,2016,04/2016,04,2016,Greater New York City Area,New York,United States,0.2
+7,,4,Hannah Gautreau,https://www.linkedin.com/in/hannahgautreau/,2017, Morgan Stanley,Front End Developer,09/2016-12/2016,09/2016,09,2016,12/2016,12,2016,Greater New York City Area,New York,United States,0.2
+7,1,,Hannah Gautreau,https://www.linkedin.com/in/hannahgautreau/,2017, University of Waterloo,Teaching Assistant,04/2017-08/2017,04/2017,04,2017,08/2017,08,2017,Kitchener Canada Area,,,0.3
+8,,1,Sarah Hameed,https://www.linkedin.com/in/hameedsarah/,2017, Manulife Financial,PMO Project Co-ordinator,01/2014-05/2014,01/2014,01,2014,05/2014,05,2014,,,,0.3
+8,,2,Sarah Hameed,https://www.linkedin.com/in/hameedsarah/,2017, Canada Post / Postes Canada,Process Engineer,09/2014-12/2014,09/2014,09,2014,12/2014,12,2014,Ottawa Canada Area,Ottawa,Canada,0.2
+8,,3,Sarah Hameed,https://www.linkedin.com/in/hameedsarah/,2017, Klick,Junior Quality Assurance Specialist,04/2015-08/2015,04/2015,04,2015,08/2015,08,2015,,,,0.3
+8,,4,Sarah Hameed,https://www.linkedin.com/in/hameedsarah/,2017, Pivotal Inc.,Sales Operations Analyst,01/2016-05/2016,01/2016,01,2016,05/2016,05,2016,,,,0.3
+8,1,,Sarah Hameed,https://www.linkedin.com/in/hameedsarah/,2017, ACS Athletics,Product Manager,09/2016-pres,09/2016,09,2016,pres,pres,pres,,,,1.5
+9,,1,Wesley S.,https://www.linkedin.com/in/wesley-sak/,2017, PWO Canada Inc.,Quality/Project Management Co-op,09/2014-12/2014,09/2014,09,2014,12/2014,12,2014,Kitchener Canada Area,,,0.2
+9,,2,Wesley S.,https://www.linkedin.com/in/wesley-sak/,2017, PWO Canada Inc.,Quality/Project Management Co-op,05/2015-08/2015,05/2015,05,2015,08/2015,08,2015,Kitchener Canada Area,,,0.3
+9,,3,Wesley S.,https://www.linkedin.com/in/wesley-sak/,2017, Waterloo Engineering Endowment Foundation,Director,09/2015-08/2016,09/2015,09,2015,08/2016,08,2016,Waterloo Ontario,Waterloo,Canada,0.9
+9,,4,Wesley S.,https://www.linkedin.com/in/wesley-sak/,2017, Aeryon Labs Inc,Manufacturing Engineering Co-op,01/2016-04/2016,01/2016,01,2016,04/2016,04,2016,Waterloo Ontario,Waterloo,Canada,0.2
+9,,5,Wesley S.,https://www.linkedin.com/in/wesley-sak/,2017, PepsiCo,Maintenance Co-op,09/2016-12/2016,09/2016,09,2016,12/2016,12,2016,Lethbridge Alberta,Lethbridge,Canada,0.2
+10,,1,Stuart Sullivan,https://www.linkedin.com/in/stuart-sullivan-1123128a/,2017, 360incentives,Software Engineer Coop,05/2015-08/2015,05/2015,05,2015,08/2015,08,2015,Whitby ON Canada,Ontario,Canada,0.3
+10,,2,Stuart Sullivan,https://www.linkedin.com/in/stuart-sullivan-1123128a/,2017, University of Waterloo,Undergraduate Research Assistant,09/2015-12/2015,09/2015,09,2015,12/2015,12,2015,Waterloo On Canada,Waterloo,Canada,0.2
+10,,3,Stuart Sullivan,https://www.linkedin.com/in/stuart-sullivan-1123128a/,2017, Digital Extremes,Stats Programmer Coop,01/2016-04/2016,01/2016,01,2016,04/2016,04,2016,London Canada Area,London,,0.2
+10,,4,Stuart Sullivan,https://www.linkedin.com/in/stuart-sullivan-1123128a/,2017, Hootsuite Media Inc.,Operations Software Developer AWS Coop,09/2016-12/2016,09/2016,09,2016,12/2016,12,2016,Vancouver Canada Area,Burnaby,Canada,0.2
+10,1,,Stuart Sullivan,https://www.linkedin.com/in/stuart-sullivan-1123128a/,2017, Google,Software Engineer,07/2017-pres,07/2017,07,2017,pres,pres,pres,Greater New York City Area,New York,United States,0.7
+11,,1,Beverly Zabawskyj,https://www.linkedin.com/in/bevzabawskyj/,2017, Ontario Teachers' Pension Plan,Business / Project Analyst,01/2014-04/2014,01/2014,01,2014,04/2014,04,2014,Toronto Canada Area,,,0.2
+11,,2,Beverly Zabawskyj,https://www.linkedin.com/in/bevzabawskyj/,2017, Marsh Canada Limited,Business Analyst,09/2014-12/2014,09/2014,09,2014,12/2014,12,2014,Toronto Canada Area,,,0.2
+11,,3,Beverly Zabawskyj,https://www.linkedin.com/in/bevzabawskyj/,2017, Deloitte Canada,Business Technology Analyst,05/2015-08/2015,05/2015,05,2015,08/2015,08,2015,Vancouver Canada Area,Burnaby,Canada,0.3
+11,,4,Beverly Zabawskyj,https://www.linkedin.com/in/bevzabawskyj/,2017, Digiflare,Technical Business Analyst,01/2016-04/2016,01/2016,01,2016,04/2016,04,2016,Toronto ,Toronto,Canada,0.2
+11,1,,Beverly Zabawskyj,https://www.linkedin.com/in/bevzabawskyj/,2017, Genesys,UX Researcher,09/2016-pres,09/2016,09,2016,pres,pres,pres,Toronto Canada Area,,,1.5
+12,,1,Osmond Xie,https://www.linkedin.com/in/osmondx/,2017, BMO Financial Group,Quality Assurance Analyst,01/2014-04/2014,01/2014,01,2014,04/2014,04,2014,,,,0.2
+12,,2,Osmond Xie,https://www.linkedin.com/in/osmondx/,2017, Ontario Teachers' Pension Plan,Systems Analyst,09/2014-12/2014,09/2014,09,2014,12/2014,12,2014,Toronto,Toronto,Canada,0.2
+12,,3,Osmond Xie,https://www.linkedin.com/in/osmondx/,2017, Marsh,Business Analyst Global Information Technology,05/2015-08/2015,05/2015,05,2015,08/2015,08,2015,Toronto Canada Area,,,0.3
+12,,4,Osmond Xie,https://www.linkedin.com/in/osmondx/,2017, TD,Sales & Trading Analyst Equity Derivatives,01/2016-12/2016,01/2016,01,2016,12/2016,12,2016,,,,0.9
+12,1,,Osmond Xie,https://www.linkedin.com/in/osmondx/,2017, TD,Sales & Trading Rotational Associate,08/2017-pres,08/2017,08,2017,pres,pres,pres,,,,0.6
+13,,1,Nima Rabiee nia,https://www.linkedin.com/in/nima-rabiee-nia-54a1a976/,2017, WSP | MMM Group,Engineering Assistant,01/2014-12/2014,01/2014,01,2014,12/2014,12,2014,Toronto Canada Area,,,0.9
+13,,2,Nima Rabiee nia,https://www.linkedin.com/in/nima-rabiee-nia-54a1a976/,2017, William Ashley China Corporation,Data Analyst,04/2015-08/2015,04/2015,04,2015,08/2015,08,2015,Toronto Canada Area,,,0.3
+13,,3,Nima Rabiee nia,https://www.linkedin.com/in/nima-rabiee-nia-54a1a976/,2017, Bombardier Aerospace,Business Intelligence Analyst,01/2016-04/2016,01/2016,01,2016,04/2016,04,2016,Toronto Canada Area,,,0.2
+13,,4,Nima Rabiee nia,https://www.linkedin.com/in/nima-rabiee-nia-54a1a976/,2017, Societe Generale Corporate and Investment Banking - SGCIB,Global Markets Financial Engineer,09/2016-12/2016,09/2016,09,2016,12/2016,12,2016,New York City,New York,United States,0.2
+13,1,,Nima Rabiee nia,https://www.linkedin.com/in/nima-rabiee-nia-54a1a976/,2017, Amaris,Consultant,11/2017-pres,11/2017,11,2017,pres,pres,pres,,,,0.3
+14,,1,Kevin Lo,https://www.linkedin.com/in/kevinlo94/,2017, Thalmic Labs,Manufacturing Engineer,08/2014-12/2014,08/2014,08,2014,12/2014,12,2014,,,,0.3
+14,,2,Kevin Lo,https://www.linkedin.com/in/kevinlo94/,2017, Motorola,Product Launch Coordinator,05/2015-08/2015,05/2015,05,2015,08/2015,08,2015,,,,0.3
+14,,3,Kevin Lo,https://www.linkedin.com/in/kevinlo94/,2017, Apple,iPhone Operations Program Manager,01/2016-04/2016,01/2016,01,2016,04/2016,04,2016,Cupertino CA,Cupertino,United States,0.2
+14,,4,Kevin Lo,https://www.linkedin.com/in/kevinlo94/,2017, Microsoft,Program Manager - Office 365 Security,09/2016-12/2016,09/2016,09,2016,12/2016,12,2016,Redmond Washington,Redmond,United States,0.2
+14,1,,Kevin Lo,https://www.linkedin.com/in/kevinlo94/,2017, Microsoft,Program Manager - Office 365 Security,07/2017-pres,07/2017,07,2017,pres,pres,pres,Redmond Washington,Redmond,United States,0.7
+15,,1,Diana Dickson,https://www.linkedin.com/in/dianamdickson/,2017, Institute of Industrial Engineers - University of Waterloo,President,01/2015-06/2016,01/2015,01,2015,06/2016,06,2016,,,,1.4
+15,,2,Diana Dickson,https://www.linkedin.com/in/dianamdickson/,2017, Prodomax Automation Inc.,Junior Project Manager,05/2015-08/2015,05/2015,05,2015,08/2015,08,2015,,,,0.3
+15,,3,Diana Dickson,https://www.linkedin.com/in/dianamdickson/,2017, The Walt Disney Company,Industrial Engineering Intern,01/2016-04/2016,01/2016,01,2016,04/2016,04,2016,Disneyland Resort,Bay,,0.2
+15,1,,Diana Dickson,https://www.linkedin.com/in/dianamdickson/,2017, Nulogy,Professional Services Consultant,08/2016-pres,08/2016,08,2016,pres,pres,pres,,,,1.6
+15,,4,Diana Dickson,https://www.linkedin.com/in/dianamdickson/,2017, Nulogy,Jr. Professional Services Consultant,2016-2016,2016,,2016,2016,,2016,,,,
+16,,1,Emily Sin,https://www.linkedin.com/in/emilysin/,2017, Toyota Motor Manufacturing Canada,Production Control Analyst,01/2014-04/2014,01/2014,01,2014,04/2014,04,2014,1055 Fountain St. North Cambridge ON N3H 5K2,,,0.2
+16,,2,Emily Sin,https://www.linkedin.com/in/emilysin/,2017, London Health Sciences Centre,Process Improvement Analyst,09/2014-12/2014,09/2014,09,2014,12/2014,12,2014,746 Baseline Rd E. London ON N6C 2R5,,,0.2
+16,,3,Emily Sin,https://www.linkedin.com/in/emilysin/,2017, Northbridge Insurance,IT Business Analyst,05/2015-08/2015,05/2015,05,2015,08/2015,08,2015,105 Adelaide Street West Toronto ON M5H 1P9,,,0.3
+16,,4,Emily Sin,https://www.linkedin.com/in/emilysin/,2017, Nulogy,Professional Services Consultant,01/2016-04/2016,01/2016,01,2016,04/2016,04,2016,555 Richmond St W Toronto ON M5V 3B1,,,0.2
+16,,5,Emily Sin,https://www.linkedin.com/in/emilysin/,2017, Ultimate Software,UX Designer,09/2016-12/2016,09/2016,09,2016,12/2016,12,2016,144 Bloor Street W Toronto ON,Toronto,Canada,0.2
+17,,1,Hilary West,https://www.linkedin.com/in/hilary-west-0ab553a9/,2017, Magna Closures & Magna Mirrors,Materials Process & Handling Co-op,01/2014-04/2014,01/2014,01,2014,04/2014,04,2014,Newmarket ON,Newmarket,Canada,0.2
+17,,2,Hilary West,https://www.linkedin.com/in/hilary-west-0ab553a9/,2017, Maple Leaf Foods Inc,Business Analyst Co-op,09/2014-12/2014,09/2014,09,2014,12/2014,12,2014,Mississauga ON,Mississauga,Canada,0.2
+17,,3,Hilary West,https://www.linkedin.com/in/hilary-west-0ab553a9/,2017, Purolator,New Product Marketing Co-op,05/2015-08/2015,05/2015,05,2015,08/2015,08,2015,Mississauga ON,Mississauga,Canada,0.3
+17,,4,Hilary West,https://www.linkedin.com/in/hilary-west-0ab553a9/,2017, London Health Sciences Centre,Quality Assurance Co-op,01/2016-04/2016,01/2016,01,2016,04/2016,04,2016,London Ontario,London,Canada,0.2
+17,,5,Hilary West,https://www.linkedin.com/in/hilary-west-0ab553a9/,2017, Nokia,Technical Sales Engineer Co-op,09/2016-12/2016,09/2016,09,2016,12/2016,12,2016,Markham ON,Markham,Canada,0.2
+18,,1,Emma Hughes,https://www.linkedin.com/in/emmashughes/,2017, BlackBerry,Mechanical Designer,01/2014-04/2014,01/2014,01,2014,04/2014,04,2014,Ottawa Canada Area,Ottawa,Canada,0.2
+18,,2,Emma Hughes,https://www.linkedin.com/in/emmashughes/,2017, Ontario Teachers' Pension Plan,Business Analyst Investment IT,09/2014-12/2014,09/2014,09,2014,12/2014,12,2014,Toronto Canada Area,,,0.2
+18,,3,Emma Hughes,https://www.linkedin.com/in/emmashughes/,2017, Canada Post / Postes Canada,Process Engineer,05/2015-08/2015,05/2015,05,2015,08/2015,08,2015,Head Office Ottawa ON,,,0.3
+18,,4,Emma Hughes,https://www.linkedin.com/in/emmashughes/,2017, Autodesk,Data Analyst,01/2016-12/2016,01/2016,01,2016,12/2016,12,2016,Toronto Ontario,Toronto,Canada,0.9
+18,1,,Emma Hughes,https://www.linkedin.com/in/emmashughes/,2017, Liquid Analytics,Product Manager,06/2017-pres,06/2017,06,2017,pres,pres,pres,Toronto Canada Area,,,0.7

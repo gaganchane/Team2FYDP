@@ -163,7 +163,12 @@ def append_replace(newFile, masterFile):
     # Finds all the newrows that need to be appended to the master file
     newRows = []
     count = 1
-    max_id = masterFile['ID'].max()
+
+    if masterFile.empty:
+        max_id = 0
+    else:
+        max_id = masterFile['ID'].max()
+
     dup_id_dict = {}
     for k, v in newDict.items():
         if k not in masterDict:
@@ -218,7 +223,7 @@ if __name__ == '__main__':
 
     masterFile = pd.read_csv("masterfile_replace_append.csv")
 
-    alma_data = pd.read_csv("quickquicktest.csv")
+    alma_data = pd.read_csv("update_mgmt_7.csv")
     # alma_data = pd.read_csv("update_mgmt_0.csv")
 
     if not alma_data.empty:
@@ -428,7 +433,7 @@ if __name__ == '__main__':
                 print("getting location...")
 
         # print(clean_df)
-        # clean_df.to_csv("test.csv", index = False)
+        clean_df.to_csv("update_mgmt_7_output.csv", index = False)
 
         masterFile = append_replace(clean_df, masterFile)
 
