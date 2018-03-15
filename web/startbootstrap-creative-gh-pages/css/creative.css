@@ -182,7 +182,7 @@ img::-moz-selection {
 header.masthead {
   padding-top: 10rem;
   padding-bottom: calc(10rem - 56px);
-  background-image: url("../img/hat2.gif");
+  background-image: url("../img/bookgradient.gif");
   background-position: center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
