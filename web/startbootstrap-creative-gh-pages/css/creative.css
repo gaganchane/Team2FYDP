@@ -99,6 +99,7 @@ img::-moz-selection {
   -webkit-transition: all 0.2s;
   -moz-transition: all 0.2s;
   transition: all 0.2s;
+
 }
 
 #mainNav .navbar-brand {
@@ -106,6 +107,9 @@ img::-moz-selection {
   text-transform: uppercase;
   color: #ffffff;
   font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  position: absolute;
+  top: 10px;
+  left: 50px;
 }
 
 #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
