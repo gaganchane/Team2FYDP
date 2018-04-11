@@ -221,16 +221,16 @@ def append_replace(newFile, masterFile):
 
 if __name__ == '__main__':
 
-    masterFile = pd.read_csv("masterfile_replace_append.csv")
+    masterFile_path = "masterfile_test.csv"
+    # masterFile_path = ""
 
-    alma_data = pd.read_csv("update_mgmt_7.csv")
-    # alma_data = pd.read_csv("update_mgmt_0.csv")
+    if masterFile_path != "":
+        masterFile = pd.read_csv(masterFile_path)
+
+    alma_data = "Management Alma Data\\almabase_output_test.csv"
+    alma_data = pd.read_csv(alma_data)
 
     if not alma_data.empty:
-    # alma_data = pd.read_csv("update_mgmt_1.csv")
-    # alma_data = pd.read_csv("C:\\Users\\Joash\\Desktop\\University Stuff\\4B uni stuff\\Team2FYDP\\data_cleaning\\"
-    #                         "transform\\update_mgmt_1.csv")
-
 
         alma_data = alma_data.rename(columns={"Name":"Name",
                                    "Linkedin URL":"Linkedin.URL",
@@ -258,7 +258,6 @@ if __name__ == '__main__':
                                    "Employment: Title 5":"Employment..Title.5",
                                    "Employment: Duration 5":"Employment..Duration.5",
                                    "Employment: Location 5":"Employment..Location.5"})
-
 
         relevant_data = alma_data[["Name",
                                    "Linkedin.URL",
@@ -433,10 +432,11 @@ if __name__ == '__main__':
                 print("getting location...")
 
         # print(clean_df)
-        clean_df.to_csv("update_mgmt_7_output.csv", index = False)
-
-        masterFile = append_replace(clean_df, masterFile)
-
-        masterFile.to_csv('masterfile_replace_append.csv', index=False)
+        # clean_df.to_csv("update_mgmt_7_output.csv", index = False)
+        if masterFile_path != "":
+            masterFile = append_replace(clean_df, masterFile)
+            masterFile.to_csv('masterfile_replace_append.csv', index=False)
+        else:
+            clean_df.to_csv("new_masterfile.csv", index=False)
     else:
         print("Input file is empty!")
